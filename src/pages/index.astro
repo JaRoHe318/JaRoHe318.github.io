@@ -1,312 +1,409 @@
----
-// Hub Landing Page: "The Digital Studio" (Teal & Wine Edition)
----
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J. R. Hernandez — Science & Light</title>
-    
+    <title>J. R. Hernandez</title>
     <style>@import url("@heatshockpineapple/design-tokens/src/theme-base.css");</style>
 
-    <script is:inline>
-        const theme = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) return localStorage.getItem('theme');
-            return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        })();
-        document.documentElement.setAttribute('data-theme', theme);
-    </script>
-
     <style>
-        /* --- VISUAL SYSTEM --- */
-        :root {
-            --bg-canvas: #081a24; 
-            --text-display: #ffffff;
-            --card-surface: rgba(255, 255, 255, 0.03);
-            --border-light: rgba(255, 255, 255, 0.1);
-        }
-
-        [data-theme="light"] {
-            --bg-canvas: var(--bg-paper);
-            --text-display: var(--text-main);
-            --card-surface: var(--bg-surface);
-            --border-light: var(--border);
-        }
-
+        /* --- 1. RESET & BASICS --- */
+        *, *::before, *::after { box-sizing: border-box; }
+        
         body {
-            background-color: var(--bg-canvas);
-            color: var(--text-display);
-            min-height: 100vh;
-            margin: 0;
+            background-color: var(--bg-paper);
+            color: var(--text-main);
             font-family: var(--font-sans);
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.5s ease;
-        }
-
-        /* --- ATMOSPHERE --- */
-        .ambient-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: 
-                radial-gradient(circle at 85% 15%, rgba(17, 75, 95, 0.25), transparent 50%),
-                radial-gradient(circle at 10% 85%, rgba(54, 21, 30, 0.2), transparent 50%);
-            pointer-events: none;
-        }
-
-        /* --- HEADER --- */
-        .site-header {
-            padding: 30px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-display);
-            text-decoration: none;
-            display: flex; align-items: center; gap: 15px;
-        }
-
-        .logo-img {
-            width: 32px; height: 32px;
-            /* PNGs are often square or rectangular, so we don't force a border-radius */
-            object-fit: contain; 
-        }
-
-        /* --- HERO --- */
-        .hero {
-            padding: 60px 40px 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            gap: 40px;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .hero { grid-template-columns: 1fr 300px; }
-        }
-
-        .hero-content h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            margin: 0 0 30px 0;
-            max-width: 20ch;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 45ch;
-            line-height: 1.6;
             margin: 0;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Portrait */
-        .hero-portrait {
-            width: 100%; max-width: 250px; aspect-ratio: 1/1;
-            border-radius: 50%; overflow: hidden;
-            border: 2px solid var(--border-light);
-            justify-self: center; opacity: 0.9;
-            transition: all 0.3s ease;
-        }
-        .hero-portrait:hover { border-color: var(--accent-deep-teal); opacity: 1; }
-        
-        .hero-portrait img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(100%); transition: filter 0.5s ease;
-        }
-        .hero-portrait:hover img { filter: grayscale(0%); }
-
-        /* --- FEATURE GRID --- */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            padding: 0 40px 80px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* --- 2. WRAPPER --- */
+        .wrapper {
             width: 100%;
+            max-width: 1100px; 
+            margin: 0 auto;
+            padding: 40px 24px; 
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Tablet: Medium breathing room */
+        @media (min-width: 700px) { 
+            .wrapper { padding: 60px 40px; } 
+        }
+
+        /* Desktop: More breathing room */
+        @media (min-width: 1024px) { 
+            .wrapper { padding: 80px 60px; } 
+        }
+
+        /* --- 3. BACKGROUND ANIMATION --- */
+        .glow {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 0; 
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
+            filter: blur(80px); 
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        @keyframes drift { 
+            0% { transform: scale(1); } 
+            100% { transform: scale(1.1) translate(20px, -20px); } 
+        }
+
+        /* --- 4. HEADER --- */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 32px; 
         }
 
         @media (min-width: 768px) {
-            .feature-grid {
-                grid-template-columns: repeat(12, 1fr);
-                grid-template-rows: 350px 300px;
+            header {
+                margin-bottom: 48px;
             }
-            .card-science { grid-column: span 7; }
-            .card-photo   { grid-column: span 5; grid-row: span 2; }
-            .card-journal { grid-column: span 7; }
         }
 
-        /* --- CARD STYLES --- */
+        .logo { 
+            font-family: var(--font-serif); 
+            font-size: 1.1rem; 
+            color: var(--text-main); 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-weight: 600; 
+        }
+        .logo img { 
+            height: 28px; 
+            width: auto; 
+        }
+
+        .contact-link { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            color: var(--text-muted); 
+            text-decoration: none; 
+            font-weight: 500; 
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--text-main);
+        }
+
+        /* --- 4.5 INTRO SECTION --- */
+        .intro {
+            margin-bottom: 48px;
+            max-width: 42rem;
+        }
+
+        .intro-eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--text-muted);
+            margin: 0 0 10px 0;
+        }
+
+        .intro-text {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        @media (min-width: 768px) {
+            .intro {
+                margin-bottom: 56px;
+            }
+            .intro-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* --- 5. CARDS --- */
+        .stack { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 32px; 
+        }
+
+        @media (min-width: 768px) {
+            .stack {
+                gap: 40px;
+            }
+        }
+
         .card {
-            background: var(--card-surface);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 40px;
-            text-decoration: none;
-            color: var(--text-display);
-            position: relative;
+            display: grid;
+            grid-template-columns: 1fr; 
+            border-radius: var(--radius);
             overflow: hidden;
-            display: flex; flex-direction: column; justify-content: space-between;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .card:hover { transform: translateY(-4px); }
-
-        .card-label {
-            font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 0.1em; margin-bottom: 20px; display: block;
+            text-decoration: none;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            width: 100%; 
+            min-height: auto;
         }
 
-        .card h2 { font-family: var(--font-serif); font-size: 2rem; margin: 0 0 10px 0; }
-        .card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; max-width: 30ch; }
-        
-        .card-arrow {
-            margin-top: auto; font-size: 1.5rem; align-self: flex-end;
-            opacity: 0.6; transition: transform 0.3s;
+        /* Tablet: side-by-side but balanced */
+        @media (min-width: 700px) {
+            .card { 
+                grid-template-columns: 1.3fr 1fr; 
+                min-height: 280px;
+            }
         }
-        .card:hover .card-arrow { transform: translateX(5px); opacity: 1; }
 
-        /* --- COLOR THEMES --- */
-        
-        /* SCIENCE: Keeps the signature Green */
-        .card-science:hover { border-color: var(--accent-primary); }
-        .card-science .card-label { color: var(--accent-primary); }
-
-        /* PHOTO: Uses new DEEP TEAL */
-        .card-photo {
-            background: linear-gradient(145deg, var(--accent-deep-teal), rgba(17, 75, 95, 0.4));
-            border-color: rgba(255, 255, 255, 0.1);
+        /* Desktop: more breathing room */
+        @media (min-width: 1024px) {
+            .card { 
+                grid-template-columns: 1.4fr 1fr; 
+                min-height: 320px;
+            }
         }
-        .card-photo:hover { border-color: #fff; }
-        .card-photo .card-label { color: #fff; opacity: 0.8; }
-        .card-photo h2 { color: #fff; }
-        .card-photo p { color: rgba(255,255,255,0.8); }
 
-        /* JOURNAL: Uses new DARK WINE */
-        .card-journal {
-            background: linear-gradient(145deg, var(--accent-deep-wine), rgba(54, 21, 30, 0.4));
-            border-color: rgba(255, 255, 255, 0.1);
+        .card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.12); 
         }
-        .card-journal:hover { border-color: var(--accent-warm); }
-        .card-journal .card-label { color: var(--accent-warm); opacity: 0.9; }
-        .card-journal h2 { color: #fff; }
-        .card-journal p { color: rgba(255,255,255,0.8); }
 
-        /* --- FOOTER --- */
-        .site-footer {
-            margin-top: auto; padding: 40px; border-top: 1px solid var(--border-light);
-            display: flex; justify-content: space-between;
-            font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);
+        .card-content {
+            padding: 28px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            color: #ffffff !important; 
         }
-        .social-links { display: flex; gap: 20px; }
-        .social-links a { color: inherit; text-decoration: none; }
-        .social-links a:hover { color: var(--text-display); }
 
-        /* Theme Toggle */
-        .theme-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); }
-        .theme-btn:hover { color: var(--text-display); }
-        .theme-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        @media (min-width: 700px) { 
+            .card-content { padding: 32px; } 
+        }
 
-        @media (max-width: 768px) {
-            .site-header, .hero, .feature-grid, .site-footer { padding: 20px; }
-            .hero h1 { font-size: 2.2rem; }
+        @media (min-width: 1024px) { 
+            .card-content { padding: 44px; } 
+        }
+
+        .lbl { 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            opacity: 0.8; 
+            margin-bottom: 10px; 
+            display: block; 
+            color: rgba(255,255,255,0.8); 
+        }
+
+        .tit { 
+            font-family: var(--font-serif); 
+            font-size: 1.6rem; 
+            margin: 0 0 12px 0; 
+            font-weight: 400; 
+            color: #ffffff; 
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) { 
+            .tit { font-size: 1.9rem; } 
+        }
+
+        @media (min-width: 1024px) { 
+            .tit { font-size: 2.2rem; } 
+        }
+
+        .desc { 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            opacity: 0.9; 
+            margin-bottom: 24px; 
+            max-width: 40ch; 
+            color: rgba(255,255,255,0.95); 
+        }
+
+        @media (min-width: 1024px) {
+            .desc {
+                font-size: 0.95rem;
+            }
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.15); 
+            border: 1px solid rgba(255,255,255,0.3); 
+            padding: 11px 22px;
+            border-radius: 50px; 
+            width: fit-content; 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease; 
+            color: #ffffff;
+        }
+
+        .card:hover .btn { 
+            background: #ffffff; 
+            color: #000000; 
+            border-color: #ffffff;
+        }
+
+        .card-img-box {
+            background-color: var(--bg-surface); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            position: relative; 
+            overflow: hidden; 
+            min-height: 220px;
+        }
+
+        @media (min-width: 700px) {
+            .card-img-box {
+                min-height: 100%;
+            }
+        }
+
+        .img-fill { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s ease; 
+        }
+
+        .card:hover .img-fill { 
+            transform: scale(1.05); 
+        }
+
+        /* THEMES */
+        .t-research .card-content { background-color: #1a2b20; }
+        .t-photos   .card-content { background-color: #114B5F; }
+        .t-journal  .card-content { background-color: #36151E; }
+
+        /* FOOTER */
+        footer { 
+            margin-top: 80px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1); 
+            padding-top: 30px; 
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+        }
+
+        @media (min-width: 1024px) {
+            footer {
+                margin-top: 100px;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
+    <div class="glow"></div>
 
-    <header class="site-header">
-        <a href="/" class="logo">
-            <img src="/logo.png" alt="Logo" class="logo-img" /> 
-            J. R. Hernandez
-        </a>
-        <button class="theme-btn" id="theme-toggle" aria-label="Toggle Theme">
-            <svg id="sun" style="display:none;" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
-            <svg id="moon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-        </button>
-    </header>
+    <div class="wrapper">
+        
+        <header>
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="Logo" />
+                J. R. Hernandez
+            </a>
+            <a href="mailto:jrh@heatshockpineapple.com" class="contact-link">Contact</a>
+        </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Architecting Data.<br>Decoding Biology.</h1>
-            <p>
-                A multidisciplinary studio bridging molecular research, data visualization, 
-                and high-resolution photography.
+        <section class="intro">
+            <p class="intro-eyebrow">Experiments, code, and light.</p>
+            <p class="intro-text">
+                I'm Jason Hernandez, a scientist and photographer exploring proteins, data,
+                and the way light hits real life.
             </p>
-        </div>
-        <div class="hero-portrait">
-            <img src="/portrait.jpg" alt="J. R. Hernandez" />
-        </div>
-    </section>
+        </section>
 
-    <main class="feature-grid">
-        <a href="https://portfolio.heatshockpineapple.com" class="card card-science">
-            <span class="card-label">01 // Research</span>
-            <div>
-                <h2>Portfolio & Code</h2>
-                <p>Molecular logic, NGL protein visualization, and biochemical R&D.</p>
+        <main class="stack">
+            
+            <a href="https://portfolio.heatshockpineapple.com" class="card t-research">
+                <div class="card-content">
+                    <div>
+                        <span class="lbl">01 // Research</span>
+                        <h2 class="tit">Portfolio</h2>
+                        <p class="desc">Molecular logic, NGL protein visualization, and biochemical R&amp;D.</p>
+                    </div>
+                    <div class="btn">View Case Studies</div>
+                </div>
+                <div class="card-img-box">
+                    <img src="/images/IMG_9577.jpg" class="img-fill" alt="Research" />
+                </div>
+            </a>
+
+            <a href="https://photos.heatshockpineapple.com" class="card t-photos">
+                <div class="card-content">
+                    <div>
+                        <span class="lbl">02 // Visuals</span>
+                        <h2 class="tit">Photography</h2>
+                        <p class="desc">Capturing light, landscapes, and the quiet moments in between.</p>
+                    </div>
+                    <div class="btn">Enter Gallery</div>
+                </div>
+                <div class="card-img-box">
+                    <img src="/images/photo2.jpg" class="img-fill" alt="Photos" />
+                </div>
+            </a>
+
+            <a href="https://blog.heatshockpineapple.com" class="card t-journal">
+                <div class="card-content">
+                    <div>
+                        <span class="lbl">03 // Field Notes</span>
+                        <h2 class="tit">Journal</h2>
+                        <p class="desc">Essays on complexity, learning, and the scientific process.</p>
+                    </div>
+                    <div class="btn">Read Essays</div>
+                </div>
+                <div class="card-img-box">
+                    <img src="/images/image3.jpg" class="img-fill" alt="Journal" />
+                </div>
+            </a>
+
+        </main>
+
+        <footer>
+            <div>© 2025 HEAT SHOCK PINEAPPLE</div>
+            <div class="footer-links">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
             </div>
-            <div class="card-arrow">→</div>
-        </a>
+        </footer>
 
-        <a href="https://photos.heatshockpineapple.com" class="card card-photo">
-            <span class="card-label">02 // Visuals</span>
-            <div>
-                <h2>Photography</h2>
-                <p>Capturing light, landscapes, and the quiet moments in between.</p>
-            </div>
-            <div class="card-arrow">↗</div>
-        </a>
+    </div>
 
-        <a href="https://blog.heatshockpineapple.com" class="card card-journal">
-            <span class="card-label">03 // Field Notes</span>
-            <div>
-                <h2>Journal</h2>
-                <p>Essays on complexity, learning, and the scientific process.</p>
-            </div>
-            <div class="card-arrow">→</div>
-        </a>
-    </main>
-
-    <footer class="site-footer">
-        <div class="copyright">© 2025 J. R. Hernandez</div>
-        <div class="social-links">
-            <a href="https://github.com/JaRoHe318">GitHub</a>
-            <a href="https://linkedin.com/in/JaRoHe318">LinkedIn</a>
-            <a href="mailto:contact@heatshockpineapple.com">Contact</a>
-        </div>
-    </footer>
-
-    <script>
-        const btn = document.getElementById('theme-toggle');
-        const sun = document.getElementById('sun');
-        const moon = document.getElementById('moon');
-
-        function updateIcons(isDark) {
-            sun.style.display = isDark ? 'block' : 'none';
-            moon.style.display = isDark ? 'none' : 'block';
-        }
-
-        const current = document.documentElement.getAttribute('data-theme');
-        updateIcons(current === 'dark');
-
-        btn.addEventListener('click', () => {
-            const cur = document.documentElement.getAttribute('data-theme');
-            const nxt = cur === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', nxt);
-            localStorage.setItem('theme', nxt);
-            updateIcons(nxt === 'dark');
-        });
-    </script>
 </body>
 </html>
