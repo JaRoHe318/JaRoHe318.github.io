@@ -190,21 +190,25 @@ a {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   width: 100%;
-  min-height: auto;
   background-color: var(--bg-surface);
+  
+  /* MOBILE: Auto height so text fits */
+  height: auto; 
 }
 
 @media (min-width: 700px) {
   .hub-card {
     grid-template-columns: 1.3fr 1fr;
-    min-height: 280px;
+    /* DESKTOP: Lock the height so they are identical */
+    height: 300px; 
   }
 }
 
 @media (min-width: 1024px) {
   .hub-card {
     grid-template-columns: 1.4fr 1fr;
-    min-height: 320px;
+    /* LARGE DESKTOP: Lock the height so they are identical */
+    height: 340px; 
   }
 }
 
@@ -224,15 +228,11 @@ a {
 }
 
 @media (min-width: 700px) {
-  .hub-card-content {
-    padding: 32px;
-  }
+  .hub-card-content { padding: 32px; }
 }
 
 @media (min-width: 1024px) {
-  .hub-card-content {
-    padding: 44px;
-  }
+  .hub-card-content { padding: 44px; }
 }
 
 .hub-lbl {
@@ -255,15 +255,11 @@ a {
 }
 
 @media (min-width: 768px) {
-  .hub-tit {
-    font-size: 1.9rem;
-  }
+  .hub-tit { font-size: 1.9rem; }
 }
 
 @media (min-width: 1024px) {
-  .hub-tit {
-    font-size: 2.2rem;
-  }
+  .hub-tit { font-size: 2.2rem; }
 }
 
 .hub-desc {
@@ -276,9 +272,7 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .hub-desc {
-    font-size: 0.95rem;
-  }
+  .hub-desc { font-size: 0.95rem; }
 }
 
 .hub-btn {
@@ -309,19 +303,22 @@ a {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  min-height: 220px;
+  
+  /* MOBILE FIX: Force image area to be exactly 250px tall */
+  height: 250px; 
 }
 
 @media (min-width: 700px) {
   .hub-card-img-box {
-    min-height: 100%;
+    /* DESKTOP: Fill the fixed card height */
+    height: 100%; 
   }
 }
 
 .hub-img-fill {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* This forces the image to crop, not stretch the box */
   transition: transform 0.5s ease;
 }
 
@@ -331,17 +328,9 @@ a {
 
 /* Card theme colors */
 
-.hub-t-research .hub-card-content {
-  background-color: #1a2b20;
-}
-
-.hub-t-photos .hub-card-content {
-  background-color: #114b5f;
-}
-
-.hub-t-journal .hub-card-content {
-  background-color: #36151e;
-}
+.hub-t-research .hub-card-content { background-color: #1a2b20; }
+.hub-t-photos .hub-card-content { background-color: #114b5f; }
+.hub-t-journal .hub-card-content { background-color: #36151e; }
 
 /* ============================
    7. HUB FOOTER
