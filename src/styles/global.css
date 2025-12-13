@@ -1,0 +1,488 @@
+ @import "@heatshockpineapple/design-tokens/src/theme-base.css";
+
+/* ============================
+   1. GLOBAL BASE
+   ============================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-paper);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Default link behavior */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* ============================
+   2. HUB BACKGROUND GLOW
+   ============================ */
+
+.hub-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
+  filter: blur(80px);
+  animation: hub-drift 20s infinite alternate ease-in-out;
+}
+
+@keyframes hub-drift {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1) translate(20px, -20px);
+  }
+}
+
+/* ============================
+   3. HUB WRAPPER LAYOUT
+   ============================ */
+
+.hub-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 700px) {
+  .hub-wrapper {
+    padding: 60px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-wrapper {
+    padding: 80px 60px;
+  }
+}
+
+/* ============================
+   4. HUB HEADER
+   ============================ */
+
+.hub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .hub-header {
+    margin-bottom: 48px;
+  }
+}
+
+.hub-logo {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.hub-logo img {
+  height: 28px;
+  width: auto;
+}
+
+.hub-contact-link {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.hub-contact-link:hover {
+  color: var(--text-main);
+}
+
+/* ============================
+   5. INTRO SECTION
+   ============================ */
+
+.hub-intro {
+  margin-bottom: 48px;
+  max-width: 42rem;
+}
+
+.hub-intro-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+}
+
+.hub-intro-text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+
+@media (min-width: 768px) {
+  .hub-intro {
+    margin-bottom: 56px;
+  }
+
+  .hub-intro-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================
+   6. CARD STACK
+   ============================ */
+
+.hub-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .hub-stack {
+    gap: 40px;
+  }
+}
+
+.hub-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  min-height: auto;
+  background-color: var(--bg-surface);
+}
+
+@media (min-width: 700px) {
+  .hub-card {
+    grid-template-columns: 1.3fr 1fr;
+    min-height: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-card {
+    grid-template-columns: 1.4fr 1fr;
+    min-height: 320px;
+  }
+}
+
+.hub-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+/* Card content */
+
+.hub-card-content {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff !important;
+}
+
+@media (min-width: 700px) {
+  .hub-card-content {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-card-content {
+    padding: 44px;
+  }
+}
+
+.hub-lbl {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hub-tit {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  margin: 0 0 12px 0;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .hub-tit {
+    font-size: 1.9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-tit {
+    font-size: 2.2rem;
+  }
+}
+
+.hub-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 24px;
+  max-width: 40ch;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@media (min-width: 1024px) {
+  .hub-desc {
+    font-size: 0.95rem;
+  }
+}
+
+.hub-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 11px 22px;
+  border-radius: 50px;
+  width: fit-content;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  color: #ffffff;
+}
+
+.hub-card:hover .hub-btn {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* Card image area */
+
+.hub-card-img-box {
+  background-color: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+}
+
+@media (min-width: 700px) {
+  .hub-card-img-box {
+    min-height: 100%;
+  }
+}
+
+.hub-img-fill {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hub-card:hover .hub-img-fill {
+  transform: scale(1.05);
+}
+
+/* Card theme colors */
+
+.hub-t-research .hub-card-content {
+  background-color: #1a2b20;
+}
+
+.hub-t-photos .hub-card-content {
+  background-color: #114b5f;
+}
+
+.hub-t-journal .hub-card-content {
+  background-color: #36151e;
+}
+
+/* ============================
+   7. HUB FOOTER
+   ============================ */
+
+.hub-footer {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 30px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 1024px) {
+  .hub-footer {
+    margin-top: 100px;
+  }
+}
+
+.hub-footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.hub-footer-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hub-footer-links a:hover {
+  color: var(--text-main);
+}
+
+/* ============================
+   8. 404 PAGE ("DENATURED")
+   ============================ */
+
+.hub-404 {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hub-404 {
+    min-height: 70vh;
+  }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Mascot */
+
+.error-mascot {
+  width: 180px;
+  height: auto;
+  margin-bottom: 2rem;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+/* Denature effect */
+
+.denature-effect h1 {
+  font-size: 6rem;
+  font-family: var(--font-mono);
+  color: var(--accent-primary);
+  margin: 0;
+  line-height: 1;
+  position: relative;
+  animation: heatshock 3s infinite alternate ease-in-out;
+}
+
+.denature-sub {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+/* Text + link */
+
+.error-text {
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  color: var(--text-body);
+}
+
+.back-link {
+  font-family: var(--font-mono);
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
+  color: var(--accent-primary);
+}
+
+/* Animations */
+
+@keyframes heatshock {
+  0% {
+    filter: blur(0px);
+    letter-spacing: -0.05em;
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(4px);
+    letter-spacing: 0.15em;
+    transform: scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}

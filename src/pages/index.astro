@@ -1,409 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J. R. Hernandez</title>
-    <style>@import url("@heatshockpineapple/design-tokens/src/theme-base.css");</style>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-    <style>
-        /* --- 1. RESET & BASICS --- */
-        *, *::before, *::after { box-sizing: border-box; }
-        
-        body {
-            background-color: var(--bg-paper);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            margin: 0;
-            min-height: 100vh;
-            display: flex; 
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+const title = 'J. R. Hernandez · Heat Shock Pineapple';
+const description =
+  'Hub for my work in science, code, and photography — a single place to jump into the portfolio, photos, and journal.';
+---
 
-        /* --- 2. WRAPPER --- */
-        .wrapper {
-            width: 100%;
-            max-width: 1100px; 
-            margin: 0 auto;
-            padding: 40px 24px; 
-            position: relative;
-            z-index: 10;
-        }
+<BaseLayout {title} {description}>
+  <div class="hub-glow"></div>
 
-        /* Tablet: Medium breathing room */
-        @media (min-width: 700px) { 
-            .wrapper { padding: 60px 40px; } 
-        }
+  <div class="hub-wrapper">
+    <header class="hub-header">
+      <a href="/" class="hub-logo">
+        <img src="/logo.png" alt="Heat Shock Pineapple logo" />
+        J. R. Hernandez
+      </a>
+      <a href="mailto:jrh@heatshockpineapple.com" class="hub-contact-link">Contact</a>
+    </header>
 
-        /* Desktop: More breathing room */
-        @media (min-width: 1024px) { 
-            .wrapper { padding: 80px 60px; } 
-        }
+    <section class="hub-intro">
+      <p class="hub-intro-eyebrow">Experiments, code, and light.</p>
+      <p class="hub-intro-text">
+        I'm Jason Hernandez, a scientist and photographer exploring proteins, data,
+        and the way light hits real life.
+      </p>
+    </section>
 
-        /* --- 3. BACKGROUND ANIMATION --- */
-        .glow {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: 0; 
-            pointer-events: none;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
-                radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
-            filter: blur(80px); 
-            animation: drift 20s infinite alternate ease-in-out;
-        }
-        @keyframes drift { 
-            0% { transform: scale(1); } 
-            100% { transform: scale(1.1) translate(20px, -20px); } 
-        }
-
-        /* --- 4. HEADER --- */
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 32px; 
-        }
-
-        @media (min-width: 768px) {
-            header {
-                margin-bottom: 48px;
-            }
-        }
-
-        .logo { 
-            font-family: var(--font-serif); 
-            font-size: 1.1rem; 
-            color: var(--text-main); 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            font-weight: 600; 
-        }
-        .logo img { 
-            height: 28px; 
-            width: auto; 
-        }
-
-        .contact-link { 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.1em; 
-            color: var(--text-muted); 
-            text-decoration: none; 
-            font-weight: 500; 
-            transition: color 0.3s ease;
-        }
-
-        .contact-link:hover {
-            color: var(--text-main);
-        }
-
-        /* --- 4.5 INTRO SECTION --- */
-        .intro {
-            margin-bottom: 48px;
-            max-width: 42rem;
-        }
-
-        .intro-eyebrow {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--text-muted);
-            margin: 0 0 10px 0;
-        }
-
-        .intro-text {
-            margin: 0;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-main);
-        }
-
-        @media (min-width: 768px) {
-            .intro {
-                margin-bottom: 56px;
-            }
-            .intro-text {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* --- 5. CARDS --- */
-        .stack { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 32px; 
-        }
-
-        @media (min-width: 768px) {
-            .stack {
-                gap: 40px;
-            }
-        }
-
-        .card {
-            display: grid;
-            grid-template-columns: 1fr; 
-            border-radius: var(--radius);
-            overflow: hidden;
-            text-decoration: none;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            width: 100%; 
-            min-height: auto;
-        }
-
-        /* Tablet: side-by-side but balanced */
-        @media (min-width: 700px) {
-            .card { 
-                grid-template-columns: 1.3fr 1fr; 
-                min-height: 280px;
-            }
-        }
-
-        /* Desktop: more breathing room */
-        @media (min-width: 1024px) {
-            .card { 
-                grid-template-columns: 1.4fr 1fr; 
-                min-height: 320px;
-            }
-        }
-
-        .card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.12); 
-        }
-
-        .card-content {
-            padding: 28px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between;
-            color: #ffffff !important; 
-        }
-
-        @media (min-width: 700px) { 
-            .card-content { padding: 32px; } 
-        }
-
-        @media (min-width: 1024px) { 
-            .card-content { padding: 44px; } 
-        }
-
-        .lbl { 
-            font-size: 0.7rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.15em; 
-            opacity: 0.8; 
-            margin-bottom: 10px; 
-            display: block; 
-            color: rgba(255,255,255,0.8); 
-        }
-
-        .tit { 
-            font-family: var(--font-serif); 
-            font-size: 1.6rem; 
-            margin: 0 0 12px 0; 
-            font-weight: 400; 
-            color: #ffffff; 
-            line-height: 1.2;
-        }
-
-        @media (min-width: 768px) { 
-            .tit { font-size: 1.9rem; } 
-        }
-
-        @media (min-width: 1024px) { 
-            .tit { font-size: 2.2rem; } 
-        }
-
-        .desc { 
-            font-size: 0.9rem; 
-            line-height: 1.6; 
-            opacity: 0.9; 
-            margin-bottom: 24px; 
-            max-width: 40ch; 
-            color: rgba(255,255,255,0.95); 
-        }
-
-        @media (min-width: 1024px) {
-            .desc {
-                font-size: 0.95rem;
-            }
-        }
-
-        .btn {
-            background: rgba(255,255,255,0.15); 
-            border: 1px solid rgba(255,255,255,0.3); 
-            padding: 11px 22px;
-            border-radius: 50px; 
-            width: fit-content; 
-            font-size: 0.7rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease; 
-            color: #ffffff;
-        }
-
-        .card:hover .btn { 
-            background: #ffffff; 
-            color: #000000; 
-            border-color: #ffffff;
-        }
-
-        .card-img-box {
-            background-color: var(--bg-surface); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            position: relative; 
-            overflow: hidden; 
-            min-height: 220px;
-        }
-
-        @media (min-width: 700px) {
-            .card-img-box {
-                min-height: 100%;
-            }
-        }
-
-        .img-fill { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.5s ease; 
-        }
-
-        .card:hover .img-fill { 
-            transform: scale(1.05); 
-        }
-
-        /* THEMES */
-        .t-research .card-content { background-color: #1a2b20; }
-        .t-photos   .card-content { background-color: #114B5F; }
-        .t-journal  .card-content { background-color: #36151E; }
-
-        /* FOOTER */
-        footer { 
-            margin-top: 80px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-top: 1px solid rgba(0,0,0,0.1); 
-            padding-top: 30px; 
-            font-size: 0.75rem; 
-            color: var(--text-muted); 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-        }
-
-        @media (min-width: 1024px) {
-            footer {
-                margin-top: 100px;
-            }
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-links a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-main);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="glow"></div>
-
-    <div class="wrapper">
-        
-        <header>
-            <a href="/" class="logo">
-                <img src="/public/logo.png" alt="Logo" />
-                J. R. Hernandez
-            </a>
-            <a href="mailto:jrh@heatshockpineapple.com" class="contact-link">Contact</a>
-        </header>
-
-        <section class="intro">
-            <p class="intro-eyebrow">Experiments, code, and light.</p>
-            <p class="intro-text">
-                I'm Jason Hernandez, a scientist and photographer exploring proteins, data,
-                and the way light hits real life.
+    <main class="hub-stack">
+      <a href="https://portfolio.heatshockpineapple.com" class="hub-card hub-t-research">
+        <div class="hub-card-content">
+          <div>
+            <span class="hub-lbl">01 // Research</span>
+            <h2 class="hub-tit">Portfolio</h2>
+            <p class="hub-desc">
+              Molecular logic, NGL protein visualization, and biochemical R&amp;D.
             </p>
-        </section>
+          </div>
+          <div class="hub-btn">View Case Studies</div>
+        </div>
+        <div class="hub-card-img-box">
+          <img src="/images/IMG_9577.jpg" class="hub-img-fill" alt="Research" />
+        </div>
+      </a>
 
-        <main class="stack">
-            
-            <a href="https://portfolio.heatshockpineapple.com" class="card t-research">
-                <div class="card-content">
-                    <div>
-                        <span class="lbl">01 // Research</span>
-                        <h2 class="tit">Portfolio</h2>
-                        <p class="desc">Molecular logic, NGL protein visualization, and biochemical R&amp;D.</p>
-                    </div>
-                    <div class="btn">View Case Studies</div>
-                </div>
-                <div class="card-img-box">
-                    <img src="/images/IMG_9577.jpg" class="img-fill" alt="Research" />
-                </div>
-            </a>
+      <a href="https://photos.heatshockpineapple.com" class="hub-card hub-t-photos">
+        <div class="hub-card-content">
+          <div>
+            <span class="hub-lbl">02 // Visuals</span>
+            <h2 class="hub-tit">Photography</h2>
+            <p class="hub-desc">
+              Capturing light, landscapes, and the quiet moments in between.
+            </p>
+          </div>
+          <div class="hub-btn">Enter Gallery</div>
+        </div>
+        <div class="hub-card-img-box">
+          <img src="/images/photo2.jpg" class="hub-img-fill" alt="Photography" />
+        </div>
+      </a>
 
-            <a href="https://photos.heatshockpineapple.com" class="card t-photos">
-                <div class="card-content">
-                    <div>
-                        <span class="lbl">02 // Visuals</span>
-                        <h2 class="tit">Photography</h2>
-                        <p class="desc">Capturing light, landscapes, and the quiet moments in between.</p>
-                    </div>
-                    <div class="btn">Enter Gallery</div>
-                </div>
-                <div class="card-img-box">
-                    <img src="/images/photo2.jpg" class="img-fill" alt="Photos" />
-                </div>
-            </a>
+      <a href="https://blog.heatshockpineapple.com" class="hub-card hub-t-journal">
+        <div class="hub-card-content">
+          <div>
+            <span class="hub-lbl">03 // Field Notes</span>
+            <h2 class="hub-tit">Journal</h2>
+            <p class="hub-desc">
+              Essays on complexity, learning, and the scientific process.
+            </p>
+          </div>
+          <div class="hub-btn">Read Essays</div>
+        </div>
+        <div class="hub-card-img-box">
+          <img src="/images/image3.jpg" class="hub-img-fill" alt="Journal" />
+        </div>
+      </a>
+    </main>
 
-            <a href="https://blog.heatshockpineapple.com" class="card t-journal">
-                <div class="card-content">
-                    <div>
-                        <span class="lbl">03 // Field Notes</span>
-                        <h2 class="tit">Journal</h2>
-                        <p class="desc">Essays on complexity, learning, and the scientific process.</p>
-                    </div>
-                    <div class="btn">Read Essays</div>
-                </div>
-                <div class="card-img-box">
-                    <img src="/images/image3.jpg" class="img-fill" alt="Journal" />
-                </div>
-            </a>
-
-        </main>
-
-        <footer>
-            <div>© 2025 HEAT SHOCK PINEAPPLE</div>
-            <div class="footer-links">
-                <a href="#">GitHub</a>
-                <a href="#">LinkedIn</a>
-            </div>
-        </footer>
-
-    </div>
-
-</body>
-</html>
+    <footer class="hub-footer">
+      <div>© 2025 HEAT SHOCK PINEAPPLE</div>
+      <div class="hub-footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Page Not Found';
+const description = 'The page you are looking for has denatured.';
+---
+
+<BaseLayout {title} {description}>
+  <section class="hub-404 error-container">
+    <img 
+      src="/android-chrome-512x512.png" 
+      alt="Chill Pineapple" 
+      class="error-mascot" 
+    />
+
+    <div class="denature-effect">
+      <h1>404</h1>
+      <div class="denature-sub">Signal Lost</div>
+    </div>
+    
+    <p class="error-text">
+      The page you are looking for has denatured. <br />
+      The link may be broken, or the content has unfolded into nonsense.
+    </p>
+    
+    <a href="/" class="back-link">Refold (Return Home)</a>
+  </section>
+</BaseLayout>
