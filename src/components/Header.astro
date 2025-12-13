@@ -1,0 +1,129 @@
+---
+const BRAND_LINK = "/"; 
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    
+    <a href={BRAND_LINK} class="site-title">
+      <img src="/logo.png" alt="Heat Shock Pineapple" class="header-logo" />
+      <span class="brand-text">
+        <span class="brand-main">Heat Shock</span><span class="gold"> Pineapple</span>
+      </span>
+    </a>
+
+    <div class="header-controls">
+      <button class="icon-btn theme-trigger" aria-label="Toggle Dark Mode" type="button">
+        <span class="theme-text">Theme</span>
+        
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<script is:inline>
+  // Simple Theme Logic (No menu logic needed anymore)
+  function setupThemeToggle() {
+    const buttons = document.querySelectorAll('.theme-trigger');
+    
+    // Helper to clear old event listeners if Astro swaps pages
+    const replaceWithClone = (el) => {
+      if (!el?.parentNode) return el;
+      const clone = el.cloneNode(true);
+      el.parentNode.replaceChild(clone, el);
+      return clone;
+    };
+
+    buttons.forEach((btn) => {
+      const newBtn = replaceWithClone(btn);
+      newBtn.addEventListener('click', () => {
+        const element = document.documentElement;
+        const current = element.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        element.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+    });
+  }
+
+  // Initialize on load and after View Transitions
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>
+
+<style>
+  /* === JUNGLE GLASS HEADER === */
+  .site-header { 
+    position: sticky; top: 0; z-index: 1000; padding: 1.2rem 0;
+  }
+  
+  .site-header::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    /* Dark Green Blur Background */
+    background: #243b30; 
+    opacity: 0.95;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .header-inner { 
+    width: 100%; max-width: 1600px; margin: 0 auto; 
+    padding: 0 2rem; 
+    display: flex; justify-content: space-between; align-items: center; 
+  }
+  
+  /* BRANDING */
+  .site-title { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; z-index: 1002; }
+  
+  .brand-text { 
+    font-family: var(--font-serif); 
+    font-weight: 600; 
+    font-size: 1.3rem; 
+    color: #ffffff;
+    word-spacing: -0.15em;
+    letter-spacing: 0.01em; 
+  }
+  
+  .gold { 
+    color: #d4b059; /* Hardcoded Gold */
+    font-style: normal;
+    font-size: 1.02em; 
+  }
+
+  .header-logo { height: 32px; width: auto; border-radius: 4px; }
+
+  /* CONTROLS (Theme Button) */
+  .header-controls { display: flex; align-items: center; }
+
+  .icon-btn { 
+    background: none; border: none; cursor: pointer; padding: 5px; 
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+    color: rgba(255,255,255,0.7);
+  }
+  .icon-btn:hover { color: #ffffff; }
+
+  /* Hide "Theme" text on small mobiles to save space */
+  .theme-text {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 400px) {
+    .theme-text { display: none; }
+  }
+
+  /* ICONS */
+  .moon-icon { display: none; }
+  .sun-icon { display: block; }
+  
+  /* Global dark mode overrides */
+  :global([data-theme="dark"]) .sun-icon { display: none; }
+  :global([data-theme="dark"]) .moon-icon { display: block; }
+</style>

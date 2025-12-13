@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 const title = 'J. R. Hernandez · Heat Shock Pineapple';
 const description =
@@ -7,17 +9,12 @@ const description =
 ---
 
 <BaseLayout {title} {description}>
+  <Header />
+
   <div class="hub-glow"></div>
 
-  <div class="hub-wrapper">
-    <header class="hub-header">
-      <a href="/" class="hub-logo">
-        <img src="/logo.png" alt="Heat Shock Pineapple logo" />
-        J. R. Hernandez
-      </a>
-      <a href="mailto:jrh@heatshockpineapple.com" class="hub-contact-link">Contact</a>
-    </header>
-
+  <main class="hub-wrapper">
+    
     <section class="hub-intro">
       <p class="hub-intro-eyebrow">Experiments, code, and light.</p>
       <p class="hub-intro-text">
@@ -26,7 +23,7 @@ const description =
       </p>
     </section>
 
-    <main class="hub-stack">
+    <div class="hub-stack">
       <a href="https://portfolio.heatshockpineapple.com" class="hub-card hub-t-research">
         <div class="hub-card-content">
           <div>
@@ -63,7 +60,7 @@ const description =
         <div class="hub-card-content">
           <div>
             <span class="hub-lbl">03 // Field Notes</span>
-            <h2 class="hub-tit">Journal</h2>
+            <h2 class="hub-tit">Protocols</h2>
             <p class="hub-desc">
               Essays on complexity, learning, and the scientific process.
             </p>
@@ -71,17 +68,12 @@ const description =
           <div class="hub-btn">Read Essays</div>
         </div>
         <div class="hub-card-img-box">
-          <img src="/images/image3.jpg" class="hub-img-fill" alt="Journal" />
+          <img src="/images/image3.jpg" class="hub-img-fill" alt="Protocols" />
         </div>
       </a>
-    </main>
+    </div>
 
-    <footer class="hub-footer">
-      <div>© 2025 HEAT SHOCK PINEAPPLE</div>
-      <div class="hub-footer-links">
-        <a href="#">GitHub</a>
-        <a href="#">LinkedIn</a>
-      </div>
-    </footer>
-  </div>
+  </main>
+
+  <Footer />
 </BaseLayout>

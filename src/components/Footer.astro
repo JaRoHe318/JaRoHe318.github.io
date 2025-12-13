@@ -1,0 +1,108 @@
+---
+const today = new Date();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    
+    <div class="footer-brand-col">
+      <div class="footer-brand">
+        <span class="brand-text">Heat Shock <span class="gold">Pineapple</span></span>
+      </div>
+      <div class="copyright">
+        &copy; {today.getFullYear()} Jason Hernandez. All rights reserved.
+      </div>
+    </div>
+
+    <div class="footer-links-col">
+      <ul class="link-list">
+        <li><a href="https://github.com/JaRoHe318" target="_blank">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/JaRoHe318" target="_blank">LinkedIn</a></li>
+        <li><a href="mailto:jrh@heatshockpineapple.com">Email</a></li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #243b30; 
+    color: #fff;
+    padding: 3rem 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0;
+    }
+  }
+
+  .footer-brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .footer-brand {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    word-spacing: -0.15em;
+  }
+  
+  .gold { 
+    color: #d4b059; 
+    font-style: normal; 
+    font-size: 1.02em;
+    margin-left: 0;
+  }
+
+  .copyright {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links-col {
+    display: flex;
+    align-items: center;
+  }
+
+  .link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem; 
+    flex-wrap: wrap;
+  }
+
+  .link-list a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .link-list a:hover { color: #ffffff; }
+</style>
