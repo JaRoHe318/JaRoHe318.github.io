@@ -1,13 +1,18 @@
-@import "@heatshockpineapple/design-tokens/src/theme-base.css";
+/* src/styles/global.css (Hub) */
+@import "@heatshockpineapple/design-tokens/src/index.css";
 
 /* ============================
    0. TOKENS & RESET
    ============================ */
 
 :root {
-  /* TOKENIZED COLORS */
-  --brand-jungle: #243b30;
-  --brand-gold: #d4b059;
+  /* --- THE FIX: Map local vars to Design Tokens --- */
+  
+  /* Instead of #243b30, we point to the token */
+  --brand-jungle: var(--brand-primary); 
+  
+  /* Instead of #d4b059, we point to the token */
+  --brand-gold: var(--brand-secondary);
 }
 
 *,
@@ -46,169 +51,88 @@ a {
 /* ============================
    1. HUB BACKGROUND GLOW
    ============================ */
-
+/* (Unchanged - this logic is layout specific) */
 .hub-glow {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   z-index: 0;
   pointer-events: none;
   background:
     radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
     radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
-
-  /* PERFORMANCE FIX: Reduce motion sensitivity */
   filter: blur(80px);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hub-glow {
-    animation: hub-drift 20s infinite alternate ease-in-out;
-  }
+  .hub-glow { animation: hub-drift 20s infinite alternate ease-in-out; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hub-glow {
-    filter: blur(40px); /* Cheaper blur for low power/motion sensitive */
-    animation: none;
-  }
+  .hub-glow { filter: blur(40px); animation: none; }
 }
 
 @keyframes hub-drift {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1) translate(20px, -20px);
-  }
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1) translate(20px, -20px); }
 }
 
 /* ============================
    2. HUB WRAPPER LAYOUT
    ============================ */
-
 .hub-wrapper {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 24px;
-  position: relative;
-  z-index: 10;
+  width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 24px;
+  position: relative; z-index: 10;
 }
 
-@media (min-width: 700px) {
-  .hub-wrapper {
-    padding: 60px 40px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hub-wrapper {
-    padding: 80px 60px;
-  }
-}
-
-/* NOTE: Header styles removed (handled by Header.astro)
-*/
+@media (min-width: 700px) { .hub-wrapper { padding: 60px 40px; } }
+@media (min-width: 1024px) { .hub-wrapper { padding: 80px 60px; } }
 
 /* ============================
    3. INTRO SECTION
    ============================ */
-
-.hub-intro {
-  margin-bottom: 48px;
-  max-width: 42rem;
-}
+.hub-intro { margin-bottom: 48px; max-width: 42rem; }
 
 .hub-intro-eyebrow {
-  font-size: 0.9em;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin: 0 0 0.5rem 0;
+  font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted); margin: 0 0 0.5rem 0;
 }
 
 .hub-intro-text {
-  margin: 0;
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.3;
+  margin: 0; font-weight: 700; font-size: 1.5rem; line-height: 1.3;
   color: var(--text-main);
 }
 
 .hub-intro-sub {
-  margin-top: 1rem;
-  color: var(--text-muted);
-  font-size: 1rem;
-  max-width: 60ch;
-}
-
-.hub-intro-subline {
-  display: block;
+  margin-top: 1rem; color: var(--text-muted); font-size: 1rem; max-width: 60ch;
 }
 
 @media (min-width: 768px) {
-  .hub-intro {
-    margin-bottom: 56px;
-  }
-
-  .hub-intro-text {
-    font-size: 1.7rem;
-    line-height: 1.25;
-  }
-
-  .hub-intro-sub {
-    font-size: 1.05rem;
-  }
+  .hub-intro { margin-bottom: 56px; }
+  .hub-intro-text { font-size: 1.7rem; line-height: 1.25; }
+  .hub-intro-sub { font-size: 1.05rem; }
 }
 
 /* ============================
    4. CARD STACK
    ============================ */
-
-.hub-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-@media (min-width: 768px) {
-  .hub-stack {
-    gap: 40px;
-  }
-}
+.hub-stack { display: flex; flex-direction: column; gap: 32px; }
+@media (min-width: 768px) { .hub-stack { gap: 40px; } }
 
 .hub-card {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: grid; grid-template-columns: 1fr;
   border-radius: var(--radius);
-  overflow: hidden;
-  text-decoration: none;
+  overflow: hidden; text-decoration: none;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  background-color: var(--bg-surface);
-
-  /* MOBILE: Auto height so text fits */
+  width: 100%; background-color: var(--bg-surface);
   height: auto;
 }
 
 @media (min-width: 700px) {
-  .hub-card {
-    grid-template-columns: 1.3fr 1fr;
-    /* DESKTOP: Lock the height so they are identical */
-    height: 300px;
-  }
+  .hub-card { grid-template-columns: 1.3fr 1fr; height: 300px; }
 }
-
 @media (min-width: 1024px) {
-  .hub-card {
-    grid-template-columns: 1.4fr 1fr;
-    /* LARGE DESKTOP: Lock the height so they are identical */
-    height: 340px;
-  }
+  .hub-card { grid-template-columns: 1.4fr 1fr; height: 340px; }
 }
 
 .hub-card:hover {
@@ -217,244 +141,125 @@ a {
 }
 
 /* Card content */
-
 .hub-card-content {
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #ffffff !important;
+  padding: 28px; display: flex; flex-direction: column;
+  justify-content: space-between; color: #ffffff !important;
 }
 
-@media (min-width: 700px) {
-  .hub-card-content {
-    padding: 32px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hub-card-content {
-    padding: 44px;
-  }
-}
+@media (min-width: 700px) { .hub-card-content { padding: 32px; } }
+@media (min-width: 1024px) { .hub-card-content { padding: 44px; } }
 
 .hub-lbl {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  opacity: 0.8;
-  margin-bottom: 10px;
-  display: block;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+  opacity: 0.8; margin-bottom: 10px; display: block; color: rgba(255, 255, 255, 0.8);
 }
 
 .hub-tit {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
-  margin: 0 0 12px 0;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.2;
+  font-family: var(--font-serif); font-size: 1.6rem; margin: 0 0 12px 0;
+  font-weight: 400; color: #ffffff; line-height: 1.2;
 }
 
-@media (min-width: 768px) {
-  .hub-tit {
-    font-size: 1.9rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hub-tit {
-    font-size: 2.2rem;
-  }
-}
+@media (min-width: 768px) { .hub-tit { font-size: 1.9rem; } }
+@media (min-width: 1024px) { .hub-tit { font-size: 2.2rem; } }
 
 .hub-desc {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  opacity: 0.9;
-  margin-bottom: 24px;
-  max-width: 40ch;
-  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem; line-height: 1.6; opacity: 0.9; margin-bottom: 24px;
+  max-width: 40ch; color: rgba(255, 255, 255, 0.95);
 }
 
-@media (min-width: 1024px) {
-  .hub-desc {
-    font-size: 0.95rem;
-  }
-}
+@media (min-width: 1024px) { .hub-desc { font-size: 0.95rem; } }
 
 .hub-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 11px 22px;
-  border-radius: 50px;
-  width: fit-content;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 11px 22px; border-radius: 50px; width: fit-content;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+  transition: all 0.3s ease; color: #ffffff;
 }
 
 .hub-card:hover .hub-btn {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
+  background: #ffffff; color: #000000; border-color: #ffffff;
 }
 
 /* Card image area */
-
 .hub-card-img-box {
-  background-color: var(--bg-surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  height: 250px;
+  background-color: var(--bg-surface); display: flex; align-items: center;
+  justify-content: center; position: relative; overflow: hidden; height: 250px;
 }
-
-@media (min-width: 700px) {
-  .hub-card-img-box {
-    height: 100%;
-  }
-}
+@media (min-width: 700px) { .hub-card-img-box { height: 100%; } }
 
 .hub-img-fill {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
 }
+.hub-card:hover .hub-img-fill { transform: scale(1.05); }
 
-.hub-card:hover .hub-img-fill {
-  transform: scale(1.05);
-}
-
-/* Card theme colors */
-/* Note: You can eventually swap these hex codes for vars if you tokenize cards specifically */
+/* --- CARD THEMES (FIXED) --- */
+/* Now using the restored Legacy Tokens for cohesion */
 .hub-t-research .hub-card-content {
-  background-color: #1a2b20;
+  background-color: var(--card-research, #1a2b20);
 }
 .hub-t-photos .hub-card-content {
-  background-color: #114b5f;
+  background-color: var(--card-photos, #114b5f);
 }
 .hub-t-journal .hub-card-content {
-  background-color: #36151e;
+  background-color: var(--card-journal, #36151e);
 }
-
-/* NOTE: Footer styles removed (handled by Footer.astro)
-*/
 
 /* ============================
    5. 404 PAGE ("DENATURED")
    ============================ */
-
+/* (Unchanged) */
 .hub-404 {
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  min-height: 60vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
   padding: 3rem 1.5rem;
 }
+@media (min-width: 768px) { .hub-404 { min-height: 70vh; } }
 
-@media (min-width: 768px) {
-  .hub-404 {
-    min-height: 70vh;
-  }
-}
-
-.error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+.error-container { display: flex; flex-direction: column; align-items: center; }
 .error-mascot {
-  width: 180px;
-  height: auto;
-  margin-bottom: 2rem;
+  width: 180px; height: auto; margin-bottom: 2rem;
   animation: float 6s ease-in-out infinite;
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
 }
 
 .denature-effect h1 {
-  font-size: 6rem;
-  font-family: var(--font-mono);
-  color: var(--accent-primary);
-  margin: 0;
-  line-height: 1;
-  position: relative;
+  font-size: 6rem; font-family: var(--font-mono); color: var(--brand-jungle); /* Using Var */
+  margin: 0; line-height: 1; position: relative;
   animation: heatshock 3s infinite alternate ease-in-out;
 }
 
 .denature-sub {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  opacity: 0.8;
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.2em;
+  color: var(--text-muted); font-size: 1.2rem; margin-top: 1rem; opacity: 0.8;
 }
 
 .error-text {
-  margin-top: 2rem;
-  margin-bottom: 2.5rem;
-  font-size: 1.1rem;
-  color: var(--text-body);
+  margin-top: 2rem; margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-body);
 }
 
 .back-link {
-  font-family: var(--font-mono);
-  padding: 0.8rem 1.5rem;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
+  font-family: var(--font-mono); padding: 0.8rem 1.5rem;
+  border: 1px solid var(--border-strong); border-radius: var(--radius);
   transition: all 0.2s ease;
 }
 
 .back-link:hover {
-  border-color: var(--accent-primary);
+  border-color: var(--brand-jungle);
   background: var(--bg-surface);
-  color: var(--accent-primary);
+  color: var(--brand-jungle);
 }
 
-/* Animations */
-
 @keyframes heatshock {
-  0% {
-    filter: blur(0px);
-    letter-spacing: -0.05em;
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    filter: blur(4px);
-    letter-spacing: 0.15em;
-    transform: scale(1.05);
-    opacity: 0.6;
-  }
+  0% { filter: blur(0px); letter-spacing: -0.05em; transform: scale(1); opacity: 1; }
+  100% { filter: blur(4px); letter-spacing: 0.15em; transform: scale(1.05); opacity: 0.6; }
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
 }
 
-/* Reduced motion for animations */
 @media (prefers-reduced-motion: reduce) {
-  .error-mascot,
-  .denature-effect h1 {
-    animation: none;
-  }
+  .error-mascot, .denature-effect h1 { animation: none; }
 }
