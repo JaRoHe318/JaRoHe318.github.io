@@ -16,8 +16,8 @@ const today = new Date();
 
     <div class="footer-links-col">
       <ul class="link-list">
-        <li><a href="https://github.com/JaRoHe318" target="_blank">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/JaRoHe318" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/JaRoHe318" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/JaRoHe318" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
         <li><a href="mailto:jrh@heatshockpineapple.com">Email</a></li>
       </ul>
     </div>
@@ -27,7 +27,7 @@ const today = new Date();
 
 <style>
   .site-footer {
-    background: #243b30; 
+    background: #243b30;
     color: #fff;
     padding: 3rem 0;
     margin-top: auto;
@@ -35,7 +35,8 @@ const today = new Date();
   }
 
   .footer-inner {
-    max-width: 1600px;
+    /* CHANGED: 1600px -> 1100px to match Hub content */
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;

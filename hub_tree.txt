@@ -1,0 +1,45 @@
+.
+├── astro.config.mjs
+├── hub_tree.txt
+├── LICENSE
+├── package-lock.json
+├── package.json
+├── public
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── CNAME
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── files
+│   ├── images
+│   │   ├── image3.jpg
+│   │   ├── IMG_9577.jpg
+│   │   ├── me
+│   │   ├── photo2.jpg
+│   │   ├── portrait.jpg
+│   │   └── ui
+│   ├── logo.png
+│   ├── robots.txt
+│   ├── site.webmanifest
+│   ├── sitemap.xml
+│   └── social-preview.png
+├── README.md
+├── scripts
+├── src
+│   ├── components
+│   │   ├── Footer.astro
+│   │   └── Header.astro
+│   ├── content
+│   ├── data
+│   ├── layouts
+│   │   └── BaseLayout.astro
+│   ├── pages
+│   │   ├── 404.astro
+│   │   └── index.astro
+│   └── styles
+│       └── global.css
+└── tsconfig.json
+
+14 directories, 29 files

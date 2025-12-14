@@ -3,9 +3,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+// 1. Import Astro's Image component
+import { Image } from 'astro:assets';
+
+// 2. Import your images from src/assets
+// (Make sure you moved them from public/ to src/assets/)
+import researchImg from '../assets/IMG_9577.jpg';
+import photoImg from '../assets/photo2.jpg';
+import protocolsImg from '../assets/image3.jpg';
+
 const title = 'J. R. Hernandez · Heat Shock Pineapple';
 const description =
   'Hub for my work in science, code, and photography — a single place to jump into the portfolio, photos, and journal.';
+
+// 3. Define responsive sizing logic (ChatGPT's recommendation)
+// Desktop: Image is ~43% of card width. Mobile: 100% width.
+const cardWidths = [360, 480, 640, 800];
+const cardSizes = "(min-width: 700px) 480px, 100vw";
 ---
 
 <BaseLayout {title} {description}>
@@ -13,16 +27,16 @@ const description =
 
   <div class="hub-glow"></div>
 
-  <main class="hub-wrapper">
+  <div class="hub-wrapper">
     
     <section class="hub-intro">
-      <!-- <p class="hub-intro-eyebrow">Experiments, code, and light.</p> -->
       <p class="hub-intro-text">
         Welcome to my personal hub!
       </p>
     </section>
 
     <div class="hub-stack">
+      
       <a href="https://portfolio.heatshockpineapple.com" class="hub-card hub-t-research">
         <div class="hub-card-content">
           <div>
@@ -35,7 +49,13 @@ const description =
           <div class="hub-btn">View Case Studies</div>
         </div>
         <div class="hub-card-img-box">
-          <img src="/images/IMG_9577.jpg" class="hub-img-fill" alt="Research" />
+          <Image 
+            src={researchImg} 
+            alt="Protein Biochemistry Research" 
+            class="hub-img-fill"
+            widths={cardWidths}
+            sizes={cardSizes}
+          />
         </div>
       </a>
 
@@ -51,7 +71,13 @@ const description =
           <div class="hub-btn">Enter Gallery</div>
         </div>
         <div class="hub-card-img-box">
-          <img src="/images/photo2.jpg" class="hub-img-fill" alt="Photography" />
+          <Image 
+            src={photoImg} 
+            alt="Photography Gallery" 
+            class="hub-img-fill"
+            widths={cardWidths}
+            sizes={cardSizes}
+          />
         </div>
       </a>
 
@@ -67,12 +93,18 @@ const description =
           <div class="hub-btn">Read Entries</div>
         </div>
         <div class="hub-card-img-box">
-          <img src="/images/image3.jpg" class="hub-img-fill" alt="Protocols" />
+          <Image 
+            src={protocolsImg} 
+            alt="Laboratory protocols" 
+            class="hub-img-fill"
+            widths={cardWidths}
+            sizes={cardSizes}
+          />
         </div>
       </a>
     </div>
 
-  </main>
+  </div>
 
   <Footer />
 </BaseLayout>

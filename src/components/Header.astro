@@ -26,7 +26,7 @@ const BRAND_LINK = "/";
 </header>
 
 <script is:inline>
-  // Simple Theme Logic (No menu logic needed anymore)
+  // Simple Theme Logic
   function setupThemeToggle() {
     const buttons = document.querySelectorAll('.theme-trigger');
     
@@ -58,11 +58,13 @@ const BRAND_LINK = "/";
 <style>
   /* === JUNGLE GLASS HEADER === */
   .site-header { 
-    position: sticky; top: 0; z-index: 1000; padding: 1.2rem 0;
+    position: sticky; top: 0;
+    z-index: 1000; padding: 1.2rem 0;
   }
   
   .site-header::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
+    content: ""; position: absolute; inset: 0;
+    z-index: -1;
     /* Dark Green Blur Background */
     background: #243b30; 
     opacity: 0.95;
@@ -71,25 +73,29 @@ const BRAND_LINK = "/";
   }
 
   .header-inner { 
-    width: 100%; max-width: 1600px; margin: 0 auto; 
+    width: 100%; 
+    /* CHANGED: 1600px -> 1100px to match Hub content */
+    max-width: 1100px; 
+    margin: 0 auto;
     padding: 0 2rem; 
     display: flex; justify-content: space-between; align-items: center; 
   }
   
   /* BRANDING */
-  .site-title { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; z-index: 1002; }
+  .site-title { display: flex;
+    align-items: center; gap: 0.75rem; text-decoration: none; z-index: 1002; }
   
   .brand-text { 
-    font-family: var(--font-serif); 
+    font-family: var(--font-serif);
     font-weight: 600; 
     font-size: 1.3rem; 
     color: #ffffff;
     word-spacing: -0.15em;
-    letter-spacing: 0.01em; 
+    letter-spacing: 0.01em;
   }
   
   .gold { 
-    color: #d4b059; /* Hardcoded Gold */
+    color: #d4b059;
     font-style: normal;
     font-size: 1.02em; 
   }
@@ -101,7 +107,8 @@ const BRAND_LINK = "/";
 
   .icon-btn { 
     background: none; border: none; cursor: pointer; padding: 5px; 
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center;
+    gap: 8px;
     transition: color 0.2s;
     color: rgba(255,255,255,0.7);
   }

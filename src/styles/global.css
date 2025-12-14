@@ -1,8 +1,14 @@
- @import "@heatshockpineapple/design-tokens/src/theme-base.css";
+@import "@heatshockpineapple/design-tokens/src/theme-base.css";
 
 /* ============================
-   1. GLOBAL BASE
+   0. TOKENS & RESET
    ============================ */
+
+:root {
+  /* TOKENIZED COLORS */
+  --brand-jungle: #243b30;
+  --brand-gold: #d4b059;
+}
 
 *,
 *::before,
@@ -31,8 +37,14 @@ a {
   transition: color 0.2s ease;
 }
 
+/* ACCESSIBILITY: Focus Visibility */
+:focus-visible { 
+  outline: 2px solid var(--brand-gold); 
+  outline-offset: 3px; 
+}
+
 /* ============================
-   2. HUB BACKGROUND GLOW
+   1. HUB BACKGROUND GLOW
    ============================ */
 
 .hub-glow {
@@ -46,8 +58,22 @@ a {
   background:
     radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
     radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
+  
+  /* PERFORMANCE FIX: Reduce motion sensitivity */
   filter: blur(80px);
-  animation: hub-drift 20s infinite alternate ease-in-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hub-glow {
+    animation: hub-drift 20s infinite alternate ease-in-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-glow {
+    filter: blur(40px); /* Cheaper blur for low power/motion sensitive */
+    animation: none;
+  }
 }
 
 @keyframes hub-drift {
@@ -60,7 +86,7 @@ a {
 }
 
 /* ============================
-   3. HUB WRAPPER LAYOUT
+   2. HUB WRAPPER LAYOUT
    ============================ */
 
 .hub-wrapper {
@@ -84,55 +110,11 @@ a {
   }
 }
 
-/* ============================
-   4. HUB HEADER
-   ============================ */
-
-.hub-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-@media (min-width: 768px) {
-  .hub-header {
-    margin-bottom: 48px;
-  }
-}
-
-.hub-logo {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  color: var(--text-main);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-}
-
-.hub-logo img {
-  height: 28px;
-  width: auto;
-}
-
-.hub-contact-link {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.hub-contact-link:hover {
-  color: var(--text-main);
-}
+/* NOTE: Header styles removed (handled by Header.astro) 
+*/
 
 /* ============================
-   5. INTRO SECTION
+   3. INTRO SECTION
    ============================ */
 
 .hub-intro {
@@ -166,7 +148,7 @@ a {
 }
 
 /* ============================
-   6. CARD STACK
+   4. CARD STACK
    ============================ */
 
 .hub-stack {
@@ -303,14 +285,11 @@ a {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  
-  /* MOBILE FIX: Force image area to be exactly 250px tall */
   height: 250px; 
 }
 
 @media (min-width: 700px) {
   .hub-card-img-box {
-    /* DESKTOP: Fill the fixed card height */
     height: 100%; 
   }
 }
@@ -318,7 +297,7 @@ a {
 .hub-img-fill {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* This forces the image to crop, not stretch the box */
+  object-fit: cover; 
   transition: transform 0.5s ease;
 }
 
@@ -327,53 +306,16 @@ a {
 }
 
 /* Card theme colors */
-
+/* Note: You can eventually swap these hex codes for vars if you tokenize cards specifically */
 .hub-t-research .hub-card-content { background-color: #1a2b20; }
 .hub-t-photos .hub-card-content { background-color: #114b5f; }
 .hub-t-journal .hub-card-content { background-color: #36151e; }
 
-/* ============================
-   7. HUB FOOTER
-   ============================ */
-
-.hub-footer {
-  margin-top: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding-top: 30px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-@media (min-width: 1024px) {
-  .hub-footer {
-    margin-top: 100px;
-  }
-}
-
-.hub-footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.hub-footer-links a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.hub-footer-links a:hover {
-  color: var(--text-main);
-}
+/* NOTE: Footer styles removed (handled by Footer.astro) 
+*/
 
 /* ============================
-   8. 404 PAGE ("DENATURED")
+   5. 404 PAGE ("DENATURED")
    ============================ */
 
 .hub-404 {
@@ -398,8 +340,6 @@ a {
   align-items: center;
 }
 
-/* Mascot */
-
 .error-mascot {
   width: 180px;
   height: auto;
@@ -407,8 +347,6 @@ a {
   animation: float 6s ease-in-out infinite;
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
 }
-
-/* Denature effect */
 
 .denature-effect h1 {
   font-size: 6rem;
@@ -429,8 +367,6 @@ a {
   margin-top: 1rem;
   opacity: 0.8;
 }
-
-/* Text + link */
 
 .error-text {
   margin-top: 2rem;
@@ -474,4 +410,12 @@ a {
   0%   { transform: translateY(0px); }
   50%  { transform: translateY(-15px); }
   100% { transform: translateY(0px); }
+}
+
+/* Reduced motion for animations */
+@media (prefers-reduced-motion: reduce) {
+  .error-mascot, 
+  .denature-effect h1 { 
+    animation: none; 
+  }
 }
