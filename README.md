@@ -2,8 +2,8 @@
 
 This repo contains the hub site for **J. R. Hernandez** – a focused landing page that routes to three main pillars:
 
-- **Portfolio** – protein biochemistry, assay development, and molecular logic  
-- **Photography** – light, cities, and quiet moments  
+- **Portfolio** – protein biochemistry, assay development, and molecular logic
+- **Photography** – light, cities, and quiet moments
 - **Journal** – essays and field notes
 
 The page is intentionally minimal: one intro, three strong cards, and a footer.
@@ -12,144 +12,127 @@ The page is intentionally minimal: one intro, three strong cards, and a footer.
 
 ## Tech Stack
 
-- Framework: Astro (static site)
-- Styling: Custom CSS + shared design tokens  
+- **Framework**: Astro (static site)
+- **Styling**: Custom CSS + shared design tokens
   - `@heatshockpineapple/design-tokens/src/theme-base.css`
-- Type config: Astro strict TS config (`astro/tsconfigs/strict`)
-- Deployment: Static build (e.g. GitHub Pages) with a `CNAME` for the custom domain
+- **Integrations**:
+  - `@astrojs/sitemap` (automated SEO)
+  - `astro:assets` (image optimization)
+- **Deployment**: GitHub Actions (automated build & deploy to GitHub Pages)
 
 ---
 
 ## Project Structure
 
     .
-    ├── astro.config.mjs
-    ├── CNAME
+    ├── .github
+    │   └── workflows
+    │       └── deploy.yml          # Automated deployment script
+    ├── astro.config.mjs            # Includes sitemap integration
     ├── package.json
-    ├── package-lock.json
-    ├── README.md
-    ├── tsconfig.json
+    ├── tsconfig.json               # Path aliases (@assets, @components)
     ├── public
-    │   ├── android-chrome-192x192.png
-    │   ├── android-chrome-512x512.png
-    │   ├── apple-touch-icon.png
-    │   ├── favicon-16x16.png
-    │   ├── favicon-32x32.png
     │   ├── favicon.ico
-    │   ├── images
+    │   ├── robots.txt              # Points to sitemap-index.xml
+    │   ├── site.webmanifest
+    │   └── CNAME                   # Custom domain binding
+    ├── src
+    │   ├── assets                  # Optimized source images (moved from public)
     │   │   ├── image3.jpg
     │   │   ├── IMG_9577.jpg
-    │   │   ├── photo2.jpg
-    │   │   └── portrait.jpg
-    │   ├── robots.txt
-    │   ├── site.webmanifest
-    │   └── social-preview.png
-    └── src
-        └── pages
-            └── index.astro
+    │   │   └── photo2.jpg
+    │   ├── components
+    │   │   ├── Footer.astro
+    │   │   └── Header.astro
+    │   ├── layouts
+    │   │   └── BaseLayout.astro    # Includes Theme Persistence script
+    │   ├── pages
+    │   │   ├── 404.astro
+    │   │   └── index.astro         # Main Hub
+    │   └── styles
+    │       └── global.css          # Tokenized colors & global styles
+    └── README.md
 
-### Key files
+### Key Changes & Files
 
-- `src/pages/index.astro`  
-  Main hub page. Contains:
-  - Header (logo + contact)
-  - Intro section (“Experiments, code, and light.”)
-  - Three cards (Portfolio / Photography / Journal)
-  - Footer
+- **`src/assets/`**
+  Contains the high-resolution images for the cards. These are imported into `index.astro` and optimized automatically by Astro (WebP conversion, resizing).
 
-- `public/`  
-  Static assets:
-  - Favicons and `site.webmanifest`
-  - `images/` used for the three cards and portrait
-  - `robots.txt` and `social-preview.png`
+- **`.github/workflows/deploy.yml`**
+  The CI/CD pipeline. Automatically installs dependencies, builds the site, and pushes to GitHub Pages whenever you commit to `main`.
 
-- `CNAME`  
-  Binds the deployed site to the custom domain (for example: `heatshockpineapple.com`).
+- **`astro.config.mjs`**
+  Configured with your site URL (`https://heatshockpineapple.com`) to generate a valid sitemap.
 
-- `tsconfig.json`  
-  Extends `astro/tsconfigs/strict` and is ready for future `.astro` / TypeScript files.
+- **`tsconfig.json`**
+  Configured with Path Aliases for cleaner imports:
+  - `@assets/*`
+  - `@components/*`
+  - `@layouts/*`
 
 ---
 
 ## Getting Started
 
-Install dependencies:
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-    npm install
-
-Run the dev server:
-
-    npm run dev
-
-Astro will print the local dev URL in the terminal (typically something like `http://localhost:4321`).
+2. **Run the dev server:**
+   ```bash
+   npm run dev
+   ```
+   Astro will print the local dev URL in the terminal (typically `http://localhost:4321`).
 
 ---
 
-## Building for Production
+## Deployment (Automated)
 
-Create a production build:
+This project uses **GitHub Actions** for deployment. You do not need to build locally.
 
-    npm run build
+1. Push your changes to the `main` branch.
+2. The workflow in `.github/workflows/deploy.yml` will trigger automatically.
+3. The site builds and deploys to **GitHub Pages**.
 
-Preview the production build locally:
+*Note: Ensure the repository "Pages" settings are set to **Source: GitHub Actions**.*
 
-    npm run preview
+### Local Build (Testing only)
+If you want to debug the production build locally:
 
-The static site is output to the `dist/` directory and can be deployed to:
-
-- GitHub Pages  
-- Netlify / Vercel / Cloudflare Pages  
-- Any static host
-
-The `CNAME` file ensures the custom domain is preserved on deploy (for GitHub Pages–style workflows).
+```bash
+npm run build
+npm run preview
+```
 
 ---
 
 ## Customization
 
 ### Intro text
-
-Edit the intro section in `src/pages/index.astro`:
-
-- Eyebrow line: “Experiments, code, and light.”
-- Body: short bio describing Jason as a scientist and photographer
-
-Adjust those two lines to change the tone of the page.
+Edit `src/pages/index.astro` to change the "Welcome" text or the intro eyebrow.
 
 ### Card content
-
-Each pillar is a single card:
-
-- Portfolio – class `t-research`
-- Photography – class `t-photos`
-- Journal – class `t-journal`
-
-Update:
-
-- Labels (e.g. “01 // Research”)
-- Titles (“Portfolio”, “Photography”, “Journal”)
-- Descriptions
-- Button text
-- `href` targets (subdomains or paths)
+The three pillars are defined in `src/pages/index.astro`.
+- **Links**: Update the `href` to point to your subdomains.
+- **Images**: Import new images from `@assets/` and pass them to the `<Image />` component.
 
 ### Images
-
-Card images and the portrait live under `public/images/`.
-
-You can:
-
-- Replace the existing files with new images using the same filenames, or  
-- Add new images and update the `src` attributes in `index.astro`.
+Place new source images in `src/assets/`.
+To use them:
+1. Import them at the top of the `.astro` file:
+   ```js
+   import myImage from '@assets/my-new-image.jpg';
+   ```
+2. Use the `<Image />` component:
+   ```jsx
+   <Image src={myImage} alt="Description" />
+   ```
 
 ---
 
 ## Notes
 
-- Global colors and typography come from the design tokens in  
-  `@heatshockpineapple/design-tokens/src/theme-base.css`.
-- The layout is intentionally lean: one page that clearly routes out to:
-  - `https://portfolio.heatshockpineapple.com`
-  - `https://photos.heatshockpineapple.com`
-  - `https://blog.heatshockpineapple.com`
-
-This repo is meant to stay small and focused as the front door to the larger Heat Shock Pineapple ecosystem.
+- **Global Colors**: Defined as CSS variables (`--brand-jungle`, `--brand-gold`) in `src/styles/global.css`.
+- **Dark Mode**: Logic is handled in `Header.astro` and persisted via a script in `BaseLayout.astro` to prevent flashing.
+- **Sitemap**: Auto-generated at `sitemap-index.xml` on build. `robots.txt` is updated to point to it.
