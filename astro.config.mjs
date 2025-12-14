@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // The Main Base Station
   site: 'https://heatshockpineapple.com', 
+  integrations: [sitemap()],
 });
