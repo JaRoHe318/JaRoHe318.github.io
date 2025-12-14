@@ -136,3 +136,10 @@ To use them:
 - **Global Colors**: Defined as CSS variables (`--brand-jungle`, `--brand-gold`) in `src/styles/global.css`.
 - **Dark Mode**: Logic is handled in `Header.astro` and persisted via a script in `BaseLayout.astro` to prevent flashing.
 - **Sitemap**: Auto-generated at `sitemap-index.xml` on build. `robots.txt` is updated to point to it.
+
+---
+
+## License
+
+- **Code**: Licensed under the [MIT License](LICENSE). Feel free to use the structure and logic for your own projects.
+- **Content**: All images, photography, and written content are **Copyright © Jason Hernandez**. They may not be used or reproduced without permission.
