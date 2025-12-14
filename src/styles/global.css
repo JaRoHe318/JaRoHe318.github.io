@@ -38,9 +38,9 @@ a {
 }
 
 /* ACCESSIBILITY: Focus Visibility */
-:focus-visible { 
-  outline: 2px solid var(--brand-gold); 
-  outline-offset: 3px; 
+:focus-visible {
+  outline: 2px solid var(--brand-gold);
+  outline-offset: 3px;
 }
 
 /* ============================
@@ -58,7 +58,7 @@ a {
   background:
     radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
     radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
-  
+
   /* PERFORMANCE FIX: Reduce motion sensitivity */
   filter: blur(80px);
 }
@@ -110,7 +110,7 @@ a {
   }
 }
 
-/* NOTE: Header styles removed (handled by Header.astro) 
+/* NOTE: Header styles removed (handled by Header.astro)
 */
 
 /* ============================
@@ -123,18 +123,30 @@ a {
 }
 
 .hub-intro-eyebrow {
-  font-size: 0.75rem;
+  font-size: 0.9em;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
-  margin: 0 0 10px 0;
+  margin: 0 0 0.5rem 0;
 }
 
 .hub-intro-text {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.3;
   color: var(--text-main);
+}
+
+.hub-intro-sub {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 60ch;
+}
+
+.hub-intro-subline {
+  display: block;
 }
 
 @media (min-width: 768px) {
@@ -143,7 +155,12 @@ a {
   }
 
   .hub-intro-text {
-    font-size: 1.1rem;
+    font-size: 1.7rem;
+    line-height: 1.25;
+  }
+
+  .hub-intro-sub {
+    font-size: 1.05rem;
   }
 }
 
@@ -173,16 +190,16 @@ a {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   width: 100%;
   background-color: var(--bg-surface);
-  
+
   /* MOBILE: Auto height so text fits */
-  height: auto; 
+  height: auto;
 }
 
 @media (min-width: 700px) {
   .hub-card {
     grid-template-columns: 1.3fr 1fr;
     /* DESKTOP: Lock the height so they are identical */
-    height: 300px; 
+    height: 300px;
   }
 }
 
@@ -190,7 +207,7 @@ a {
   .hub-card {
     grid-template-columns: 1.4fr 1fr;
     /* LARGE DESKTOP: Lock the height so they are identical */
-    height: 340px; 
+    height: 340px;
   }
 }
 
@@ -210,11 +227,15 @@ a {
 }
 
 @media (min-width: 700px) {
-  .hub-card-content { padding: 32px; }
+  .hub-card-content {
+    padding: 32px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .hub-card-content { padding: 44px; }
+  .hub-card-content {
+    padding: 44px;
+  }
 }
 
 .hub-lbl {
@@ -237,11 +258,15 @@ a {
 }
 
 @media (min-width: 768px) {
-  .hub-tit { font-size: 1.9rem; }
+  .hub-tit {
+    font-size: 1.9rem;
+  }
 }
 
 @media (min-width: 1024px) {
-  .hub-tit { font-size: 2.2rem; }
+  .hub-tit {
+    font-size: 2.2rem;
+  }
 }
 
 .hub-desc {
@@ -254,7 +279,9 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .hub-desc { font-size: 0.95rem; }
+  .hub-desc {
+    font-size: 0.95rem;
+  }
 }
 
 .hub-btn {
@@ -285,19 +312,19 @@ a {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  height: 250px; 
+  height: 250px;
 }
 
 @media (min-width: 700px) {
   .hub-card-img-box {
-    height: 100%; 
+    height: 100%;
   }
 }
 
 .hub-img-fill {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   transition: transform 0.5s ease;
 }
 
@@ -307,11 +334,17 @@ a {
 
 /* Card theme colors */
 /* Note: You can eventually swap these hex codes for vars if you tokenize cards specifically */
-.hub-t-research .hub-card-content { background-color: #1a2b20; }
-.hub-t-photos .hub-card-content { background-color: #114b5f; }
-.hub-t-journal .hub-card-content { background-color: #36151e; }
+.hub-t-research .hub-card-content {
+  background-color: #1a2b20;
+}
+.hub-t-photos .hub-card-content {
+  background-color: #114b5f;
+}
+.hub-t-journal .hub-card-content {
+  background-color: #36151e;
+}
 
-/* NOTE: Footer styles removed (handled by Footer.astro) 
+/* NOTE: Footer styles removed (handled by Footer.astro)
 */
 
 /* ============================
@@ -407,15 +440,21 @@ a {
 }
 
 @keyframes float {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 /* Reduced motion for animations */
 @media (prefers-reduced-motion: reduce) {
-  .error-mascot, 
-  .denature-effect h1 { 
-    animation: none; 
+  .error-mascot,
+  .denature-effect h1 {
+    animation: none;
   }
 }

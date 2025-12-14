@@ -3,23 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-// 1. Import Astro's Image component
+// Astro assets
 import { Image } from 'astro:assets';
 
-// 2. Import your images from src/assets
-// (Make sure you moved them from public/ to src/assets/)
+// Images (from src/assets)
 import researchImg from '../assets/IMG_9577.jpg';
 import photoImg from '../assets/photo2.jpg';
 import protocolsImg from '../assets/image3.jpg';
 
 const title = 'J. R. Hernandez · Heat Shock Pineapple';
 const description =
-  'Hub for my work in science, code, and photography — a single place to jump into the portfolio, photos, and journal.';
+  'J. R. Hernandez — biochemistry, computation, and photography. Portfolio, photos, and Heat Shock Protocols.';
 
-// 3. Define responsive sizing logic (ChatGPT's recommendation)
-// Desktop: Image is ~43% of card width. Mobile: 100% width.
+// Responsive image sizing for card images
 const cardWidths = [360, 480, 640, 800];
-const cardSizes = "(min-width: 700px) 480px, 100vw";
+const cardSizes = '(min-width: 700px) 480px, 100vw';
 ---
 
 <BaseLayout {title} {description}>
@@ -28,30 +26,40 @@ const cardSizes = "(min-width: 700px) 480px, 100vw";
   <div class="hub-glow"></div>
 
   <div class="hub-wrapper">
-    
     <section class="hub-intro">
-      <p class="hub-intro-text">
-        Welcome to my personal hub!
+      <p class="hub-intro-eyebrow">J. R. Hernandez</p>
+
+      <h1 class="hub-intro-text">
+        Biochemistry, computation,<br />and photography.
+      </h1>
+
+      <p class="hub-intro-sub">
+        I work with proteins, write code, and take photographs.
+        <span class="hub-intro-subline">This site brings those threads together in one place.</span>
       </p>
     </section>
 
     <div class="hub-stack">
-      
-      <a href="https://portfolio.heatshockpineapple.com" class="hub-card hub-t-research">
+      <a
+        href="https://portfolio.heatshockpineapple.com"
+        class="hub-card hub-t-research"
+        aria-label="Open portfolio"
+      >
         <div class="hub-card-content">
           <div>
             <span class="hub-lbl">01 // Research</span>
             <h2 class="hub-tit">Portfolio</h2>
             <p class="hub-desc">
-              Protein Biochemistry and Data analysis 
+              An overview of my research, technical work, and analysis in protein biochemistry.
             </p>
           </div>
-          <div class="hub-btn">View Case Studies</div>
+          <div class="hub-btn">View Work</div>
         </div>
+
         <div class="hub-card-img-box">
-          <Image 
-            src={researchImg} 
-            alt="Protein Biochemistry Research" 
+          <Image
+            src={researchImg}
+            alt="Protein biochemistry research"
             class="hub-img-fill"
             widths={cardWidths}
             sizes={cardSizes}
@@ -59,21 +67,26 @@ const cardSizes = "(min-width: 700px) 480px, 100vw";
         </div>
       </a>
 
-      <a href="https://photos.heatshockpineapple.com" class="hub-card hub-t-photos">
+      <a
+        href="https://photos.heatshockpineapple.com"
+        class="hub-card hub-t-photos"
+        aria-label="Open photography gallery"
+      >
         <div class="hub-card-content">
           <div>
             <span class="hub-lbl">02 // Visuals</span>
             <h2 class="hub-tit">Photography</h2>
             <p class="hub-desc">
-              Collection of my favorite moments
+              Photographs of people, places, and everyday moments, taken along the way.
             </p>
           </div>
-          <div class="hub-btn">Enter Gallery</div>
+          <div class="hub-btn">View Photos</div>
         </div>
+
         <div class="hub-card-img-box">
-          <Image 
-            src={photoImg} 
-            alt="Photography Gallery" 
+          <Image
+            src={photoImg}
+            alt="Photography gallery"
             class="hub-img-fill"
             widths={cardWidths}
             sizes={cardSizes}
@@ -81,21 +94,26 @@ const cardSizes = "(min-width: 700px) 480px, 100vw";
         </div>
       </a>
 
-      <a href="https://blog.heatshockpineapple.com" class="hub-card hub-t-journal">
+      <a
+        href="https://blog.heatshockpineapple.com"
+        class="hub-card hub-t-journal"
+        aria-label="Open Heat Shock Protocols"
+      >
         <div class="hub-card-content">
           <div>
-            <span class="hub-lbl">03 // Blog</span>
+            <span class="hub-lbl">03 // Writing</span>
             <h2 class="hub-tit">Protocols</h2>
             <p class="hub-desc">
-              Posts on things I find interesting
+              Notes on experiments, code, and tools, written while working through them.
             </p>
           </div>
-          <div class="hub-btn">Read Entries</div>
+          <div class="hub-btn">Read Protocols</div>
         </div>
+
         <div class="hub-card-img-box">
-          <Image 
-            src={protocolsImg} 
-            alt="Laboratory protocols" 
+          <Image
+            src={protocolsImg}
+            alt="Heat Shock Protocols"
             class="hub-img-fill"
             widths={cardWidths}
             sizes={cardSizes}
@@ -103,7 +121,6 @@ const cardSizes = "(min-width: 700px) 480px, 100vw";
         </div>
       </a>
     </div>
-
   </div>
 
   <Footer />
