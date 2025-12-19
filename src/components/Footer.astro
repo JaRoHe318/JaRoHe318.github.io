@@ -1,25 +1,20 @@
 ---
-const today = new Date();
+/* src/components/Footer.astro */
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
     
-    <div class="footer-brand-col">
-      <div class="footer-brand">
-        <span class="brand-text">Heat Shock <span class="gold">Pineapple</span></span>
-      </div>
-      <div class="copyright">
-        &copy; {today.getFullYear()} Jason Hernandez. All rights reserved.
-      </div>
+    <div class="footer-brand">
+      <span class="brand-text">Heat Shock<span class="gold">Pineapple</span></span>
+      <p class="copyright">&copy; {currentYear} Jason Hernandez</p>
     </div>
 
-    <div class="footer-links-col">
-      <ul class="link-list">
-        <li><a href="https://github.com/JaRoHe318/JaRoHe318.github.io" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/jrh318/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-        <li><a href="mailto:jrh@heatshockpineapple.com">Email</a></li>
-      </ul>
+    <div class="footer-links">
+      <a href="https://github.com/jarohe318" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://heatshockpineapple.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>
+      <a href="https://www.linkedin.com/in/jrh318" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
 
   </div>
@@ -27,16 +22,18 @@ const today = new Date();
 
 <style>
   .site-footer {
-    background: #243b30;
-    color: #fff;
+    width: 100%;
+    /* TOKEN: Matches Header Background */
+    background: var(--color-jungle-800);
+    /* CHANGE: Hardcoded to white so it never flips to black, even if theme vars change */
+    color: #ffffff;
+    margin-top: 6rem;
     padding: 3rem 0;
-    margin-top: auto;
-    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
   .footer-inner {
-    /* CHANGED: 1600px -> 1100px to match Hub content */
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
@@ -48,62 +45,55 @@ const today = new Date();
     .footer-inner {
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
-      gap: 0;
+      align-items: flex-end;
     }
   }
 
-  .footer-brand-col {
+  /* BRANDING */
+  .footer-brand {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
   }
 
-  .footer-brand {
+  .brand-text {
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 600;
-    color: #ffffff;
-    word-spacing: -0.15em;
+    /* CHANGE: Inherit ensures it stays white like the parent container */
+    color: inherit;
+    word-spacing: -0.15em; 
   }
-  
-  .gold { 
-    color: #d4b059; 
-    font-style: normal; 
-    font-size: 1.02em;
-    margin-left: 0;
+
+  /* .gold class is handled by global.css utility */
+  .gold {
+    font-style: normal;
+    margin-left: 0.2em;
   }
 
   .copyright {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .footer-links-col {
-    display: flex;
-    align-items: center;
-  }
-
-  .link-list {
-    list-style: none;
-    padding: 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
     margin: 0;
-    display: flex;
-    gap: 2rem; 
-    flex-wrap: wrap;
   }
 
-  .link-list a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
+  /* LINKS */
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
     font-family: var(--font-sans);
     font-size: 0.95rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
   }
-  
-  .link-list a:hover { color: #ffffff; }
+
+  .footer-links a:hover {
+    color: #ffffff;
+  }
 </style>

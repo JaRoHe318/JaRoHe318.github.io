@@ -52,7 +52,7 @@ a {
    1. HUB BACKGROUND GLOW
    ============================ */
 /* (Unchanged - this logic is layout specific) */
-.hub-glow {
+/* .hub-glow {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   z-index: 0;
@@ -61,7 +61,7 @@ a {
     radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
     radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
   filter: blur(80px);
-}
+} */
 
 @media (prefers-reduced-motion: no-preference) {
   .hub-glow { animation: hub-drift 20s infinite alternate ease-in-out; }
@@ -262,4 +262,9 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .error-mascot, .denature-effect h1 { animation: none; }
+}
+
+/* THE GOLD UTILITY */
+.gold { 
+  color: var(--color-gold-500) !important; 
 }
