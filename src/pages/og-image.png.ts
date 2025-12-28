@@ -2,135 +2,131 @@ import type { APIRoute } from 'astro';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import fs from 'node:fs/promises';
+import path from 'node:path';
 
-// Fetch Jost Bold
-const fontURL = 'https://cdn.jsdelivr.net/npm/@fontsource/jost@5.0.0/files/jost-latin-700-normal.woff';
+const fontBoldURL = 'https://cdn.jsdelivr.net/npm/@fontsource/jost@5.0.0/files/jost-latin-900-normal.woff';
+const fontRegURL = 'https://cdn.jsdelivr.net/npm/@fontsource/jost@5.0.0/files/jost-latin-500-normal.woff';
 
 export const GET: APIRoute = async () => {
-  const fontFile = await fetch(fontURL);
-  if (!fontFile.ok) throw new Error('Failed to fetch font');
-  const fontData = await fontFile.arrayBuffer();
+  const fontBold = await fetch(fontBoldURL).then(res => res.arrayBuffer());
+  const fontReg = await fetch(fontRegURL).then(res => res.arrayBuffer());
 
-  // Read Logo
-  const logoUrl = new URL('../../public/android-chrome-512x512.png', import.meta.url);
-  const logoBuffer = await fs.readFile(logoUrl);
-  const logoBase64 = `data:image/png;base64,${logoBuffer.toString('base64')}`;
+  const logoPath = path.resolve(process.cwd(), 'public/logo.png');
+  let logoBase64 = '';
+  try {
+    const logoBuffer = await fs.readFile(logoPath);
+    logoBase64 = `data:image/png;base64,${logoBuffer.toString('base64')}`;
+  } catch (e) {
+    console.error('Logo not found at:', logoPath);
+  }
 
   const svg = await satori(
     {
       type: 'div',
       props: {
+        style: {
+          height: '100%', width: '100%',
+          display: 'flex', flexDirection: 'column',
+          // TONE-ON-TONE: Deep Canopy Green (Instead of Black)
+          backgroundColor: '#0f1c16', 
+        },
         children: [
-          // BACKGROUND: Petrol Blue Gradient
+          
+          // === ZONE 1: BRAND HEADER (Top 65%) ===
           {
             type: 'div',
             props: {
               style: {
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                backgroundColor: '#11221C', 
-                backgroundImage: 'radial-gradient(circle at center, #2d5a45 0%, #11221C 100%)',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              },
-            },
-          },
-          // CONTENT CARD
-          {
-            type: 'div',
-            props: {
-              style: {
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                border: '4px solid #FCD34D', // Gold
-                backgroundColor: 'rgba(17, 34, 28, 0.85)',
-                padding: '50px 80px',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                display: 'flex', flex: '65', 
+                width: '100%',
+                // Primary Brand Green
+                backgroundColor: '#243b30', 
+                alignItems: 'center', justifyContent: 'center',
+                gap: '40px',
               },
               children: [
-                // LOGO
-                {
+                logoBase64 ? {
                   type: 'img',
                   props: {
-                    src: logoBase64, width: 100, height: 100,
-                    style: { marginBottom: '25px', borderRadius: '12px' },
-                  },
-                },
-                // TITLE (SPLIT COLOR)
-                {
-                  type: 'h1',
-                  props: {
-                    style: {
-                      fontSize: '54px', 
-                      color: '#ffffff', // Default color for first part
-                      marginBottom: '15px',
-                      fontFamily: 'Jost', 
-                      textAlign: 'center', 
-                      fontWeight: 700,
-                      letterSpacing: '-0.02em',
-                      display: 'flex', // Ensures spans sit on same line
-                      gap: '12px',     // Space between words
-                    },
-                    children: [
-                      {
-                        type: 'span',
-                        props: { children: 'Heat Shock' }
-                      },
-                      {
-                        type: 'span',
-                        props: { 
-                          children: 'Pineapple',
-                          style: { color: '#FCD34D' } // BRAND GOLD
-                        }
-                      }
-                    ]
-                  },
-                },
-                // SUBTITLE
-                {
-                  type: 'h2',
-                  props: {
-                    children: 'Biochemistry  ·  Computation  ·  Photography',
-                    style: {
-                      fontSize: '22px', color: '#FCD34D', textTransform: 'uppercase',
-                      letterSpacing: '0.15em', fontFamily: 'Jost', textAlign: 'center',
-                    },
-                  },
-                },
-                // DIVIDER
+                    src: logoBase64, width: 150, height: 150,
+                    style: { borderRadius: '12px', objectFit: 'contain' }
+                  }
+                } : null,
+                
                 {
                   type: 'div',
                   props: {
-                    style: {
-                      width: '100px', height: '2px', backgroundColor: '#FCD34D',
-                      marginTop: '30px', marginBottom: '30px',
-                    }
+                    style: { display: 'flex', flexDirection: 'column', lineHeight: '1' },
+                    children: [
+                      { type: 'div', props: { children: 'HEATSHOCK', style: { color: 'white', fontFamily: 'Jost', fontWeight: 900, fontSize: '80px', letterSpacing: '0.3em' } } },
+                      { type: 'div', props: { children: 'PINEAPPLE', style: { color: '#ffd700', fontFamily: 'Jost', fontWeight: 900, fontSize: '80px', marginTop: '12px', letterSpacing: '0.4065em' } } },
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+
+          // === ZONE 2: THE 3 PILLARS (Bottom 35%) ===
+          {
+            type: 'div',
+            props: {
+              style: {
+                display: 'flex', flex: '35', 
+                width: '100%', flexDirection: 'row',
+                // Matches container background
+                backgroundColor: '#0f1c16',
+                borderTop: '4px solid #ffd700',
+              },
+              children: [
+                // BLOCK 1: Biochemistry
+                {
+                  type: 'div',
+                  props: {
+                    style: { display: 'flex', flex: '1', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid rgba(255,255,255,0.05)' },
+                    children: [
+                      { type: 'div', props: { children: 'BIOCHEMISTRY', style: { color: 'white', fontFamily: 'JostReg', fontSize: '24px', letterSpacing: '0.2em', opacity: 0.9 } } },
+                    ]
                   }
                 },
-                // DOMAIN
+                // BLOCK 2: Computation
                 {
                   type: 'div',
                   props: {
-                    children: 'heatshockpineapple.com',
-                    style: {
-                      fontSize: '20px', color: '#94a3b8', fontFamily: 'Jost', letterSpacing: '0.05em',
-                    },
-                  },
+                    style: { display: 'flex', flex: '1', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid rgba(255,255,255,0.05)' },
+                    children: [
+                      { type: 'div', props: { children: 'COMPUTATION', style: { color: 'white', fontFamily: 'JostReg', fontSize: '24px', letterSpacing: '0.2em', opacity: 0.9 } } },
+                    ]
+                  }
                 },
-              ],
-            },
-          },
-        ],
-        style: {
-          height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000',
-        },
-      },
-    } as any,
+                // BLOCK 3: Photography
+                {
+                  type: 'div',
+                  props: {
+                    style: { display: 'flex', flex: '1', alignItems: 'center', justifyContent: 'center' },
+                    children: [
+                       { type: 'div', props: { children: 'PHOTOGRAPHY', style: { color: 'white', fontFamily: 'JostReg', fontSize: '24px', letterSpacing: '0.2em', opacity: 0.9 } } },
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+
+        ]
+      }
+    },
     {
       width: 1200, height: 630,
-      fonts: [{ name: 'Jost', data: fontData, style: 'normal' }],
+      fonts: [
+        { name: 'Jost', data: fontBold, weight: 900, style: 'normal' },
+        { name: 'JostReg', data: fontReg, weight: 500, style: 'normal' },
+      ],
     }
   );
 
-  const resvg = new Resvg(svg);
-  return new Response(resvg.render().asPng() as any, {
-    headers: { 'Content-Type': 'image/png' },
+  const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } });
+  return new Response(resvg.render().asPng(), {
+    headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=86400, s-maxage=86400' },
   });
 };
