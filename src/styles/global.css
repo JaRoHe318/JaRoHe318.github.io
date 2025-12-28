@@ -6,43 +6,44 @@
    ============================ */
 
 :root {
-  /* --- THE FIX: Map local vars to Design Tokens --- */
-  
-  /* Instead of #243b30, we point to the token */
+  /* Use Tokens */
   --brand-jungle: var(--brand-primary); 
-  
-  /* Instead of #d4b059, we point to the token */
   --brand-gold: var(--brand-secondary);
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
 
+/* FIX: Sticky Footer Layout + Maru Typography */
 body {
   background-color: var(--bg-paper);
   color: var(--text-main);
-  font-family: var(--font-sans);
+  
+  /* MARU UPDATE: All Jost, Airy Spacing */
+  font-family: var(--font-sans); 
+  line-height: 1.75;
+  font-weight: 400;
+  
+  /* STICKY FOOTER LOGIC */
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  
   -webkit-font-smoothing: antialiased;
 }
 
-/* Default link behavior */
 a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-/* ACCESSIBILITY: Focus Visibility */
 :focus-visible {
   outline: 2px solid var(--brand-gold);
   outline-offset: 3px;
@@ -51,18 +52,6 @@ a {
 /* ============================
    1. HUB BACKGROUND GLOW
    ============================ */
-/* (Unchanged - this logic is layout specific) */
-/* .hub-glow {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 15% 50%, rgba(17, 75, 95, 0.12), transparent 45%),
-    radial-gradient(circle at 85% 30%, rgba(54, 21, 30, 0.10), transparent 45%);
-  filter: blur(80px);
-} */
-
 @media (prefers-reduced-motion: no-preference) {
   .hub-glow { animation: hub-drift 20s infinite alternate ease-in-out; }
 }
@@ -82,132 +71,228 @@ a {
 .hub-wrapper {
   width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 24px;
   position: relative; z-index: 10;
+  
+  /* FIX: Pushes footer down to fill empty space */
+  flex: 1; 
 }
 
 @media (min-width: 700px) { .hub-wrapper { padding: 60px 40px; } }
 @media (min-width: 1024px) { .hub-wrapper { padding: 80px 60px; } }
 
 /* ============================
-   3. INTRO SECTION
+   3. INTRO SECTION (Compact for "Immediately Seen")
    ============================ */
-.hub-intro { margin-bottom: 48px; max-width: 42rem; }
+.hub-intro { 
+  margin-bottom: 24px; /* Tighter margin */
+  max-width: 42rem; 
+}
 
 .hub-intro-eyebrow {
-  font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--text-muted); margin: 0 0 0.5rem 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase; 
+  letter-spacing: 0.08em;
+  color: var(--text-main); 
+  opacity: 0.9;
+  margin: 0 0 0.5rem 0;
 }
 
 .hub-intro-text {
-  margin: 0; font-weight: 700; font-size: 1.5rem; line-height: 1.3;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  /* Smaller on mobile to save vertical space */
+  font-size: 1.6rem; 
+  line-height: 1.2;
   color: var(--text-main);
+  margin: 0.25rem 0 0.75rem 0;
 }
 
 .hub-intro-sub {
-  margin-top: 1rem; color: var(--text-muted); font-size: 1rem; max-width: 60ch;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-main);
+  opacity: 0.9;
+  max-width: 50ch;
+  font-weight: 400;
+  margin: 0;
 }
 
+/* Restore size on Desktop */
 @media (min-width: 768px) {
   .hub-intro { margin-bottom: 56px; }
-  .hub-intro-text { font-size: 1.7rem; line-height: 1.25; }
-  .hub-intro-sub { font-size: 1.05rem; }
+  .hub-intro-text { font-size: 2rem; margin-bottom: 1.5rem; }
+  .hub-intro-sub { font-size: 1.1rem; }
 }
 
-/* ============================
-   4. CARD STACK
-   ============================ */
-.hub-stack { display: flex; flex-direction: column; gap: 32px; }
-@media (min-width: 768px) { .hub-stack { gap: 40px; } }
 
+/* =========================================
+   4. CARD STACK (Gallery Pillars)
+   ========================================= */
+
+.hub-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === MOBILE: THE LIST (Image Left | Text Right) === */
 .hub-card {
-  display: grid; grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 110px 1fr; /* Fixed Image Width */
+  grid-template-rows: auto;
+  
+  /* Fixed height on mobile ensures neatness */
+  height: 160px;
+  
+  background-color: var(--bg-surface);
   border-radius: var(--radius);
-  overflow: hidden; text-decoration: none;
+  overflow: hidden;
+  text-decoration: none;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  width: 100%; background-color: var(--bg-surface);
-  height: auto;
-}
-
-@media (min-width: 700px) {
-  .hub-card { grid-template-columns: 1.3fr 1fr; height: 300px; }
-}
-@media (min-width: 1024px) {
-  .hub-card { grid-template-columns: 1.4fr 1fr; height: 340px; }
 }
 
 .hub-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Card content */
 .hub-card-content {
-  padding: 28px; display: flex; flex-direction: column;
-  justify-content: space-between; color: #ffffff !important;
+  padding: 0 20px; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; /* Center Vertically */
+  align-items: flex-start;
+  color: #ffffff !important;
+  order: 2; 
+  min-width: 0;
 }
 
-@media (min-width: 700px) { .hub-card-content { padding: 32px; } }
-@media (min-width: 1024px) { .hub-card-content { padding: 44px; } }
-
-.hub-lbl {
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
-  opacity: 0.8; margin-bottom: 10px; display: block; color: rgba(255, 255, 255, 0.8);
-}
-
-.hub-tit {
-  font-family: var(--font-serif); font-size: 1.6rem; margin: 0 0 12px 0;
-  font-weight: 400; color: #ffffff; line-height: 1.2;
-}
-
-@media (min-width: 768px) { .hub-tit { font-size: 1.9rem; } }
-@media (min-width: 1024px) { .hub-tit { font-size: 2.2rem; } }
-
-.hub-desc {
-  font-size: 0.9rem; line-height: 1.6; opacity: 0.9; margin-bottom: 24px;
-  max-width: 40ch; color: rgba(255, 255, 255, 0.95);
-}
-
-@media (min-width: 1024px) { .hub-desc { font-size: 0.95rem; } }
-
-.hub-btn {
-  background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 11px 22px; border-radius: 50px; width: fit-content;
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
-  transition: all 0.3s ease; color: #ffffff;
-}
-
-.hub-card:hover .hub-btn {
-  background: #ffffff; color: #000000; border-color: #ffffff;
-}
-
-/* Card image area */
 .hub-card-img-box {
-  background-color: var(--bg-surface); display: flex; align-items: center;
-  justify-content: center; position: relative; overflow: hidden; height: 250px;
+  position: relative; 
+  overflow: hidden; 
+  width: 100%;
+  height: 100%; 
+  order: 1; 
 }
-@media (min-width: 700px) { .hub-card-img-box { height: 100%; } }
 
 .hub-img-fill {
-  width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+  width: 100%; height: 100%; object-fit: cover; 
+  transition: transform 0.5s ease;
 }
 .hub-card:hover .hub-img-fill { transform: scale(1.05); }
 
-/* --- CARD THEMES (FIXED) --- */
-/* Now using the restored Legacy Tokens for cohesion */
-.hub-t-research .hub-card-content {
-  background-color: var(--card-research, #1a2b20);
-}
-.hub-t-photos .hub-card-content {
-  background-color: var(--card-photos, #114b5f);
-}
-.hub-t-journal .hub-card-content {
-  background-color: var(--card-journal, #36151e);
+
+/* === DESKTOP: THE GALLERY ROW (All 3 in Window) === */
+@media (min-width: 900px) {
+  
+  .hub-stack {
+    display: grid;
+    /* 3 Equal Columns = All visible horizontally */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .hub-card {
+    /* Switch to Vertical Orientation for Pillars */
+    display: flex;
+    flex-direction: column;
+    
+    /* DYNAMIC HEIGHT: 55% of viewport height */
+    /* This guarantees it fits in the window without being too tall or short */
+    height: 55vh; 
+    min-height: 400px; /* Safety min-height */
+    max-height: 600px; /* Safety max-height */
+  }
+
+  /* IMAGE: Takes up all available space */
+  .hub-card-img-box {
+    flex: 1; 
+    order: 1;
+    width: 100%;
+    height: auto; /* Let Flex handle height */
+  }
+
+  /* CONTENT: Sits at bottom, size defined by text */
+  .hub-card-content {
+    flex: 0 0 auto; /* Do not stretch, just fit text */
+    order: 2;
+    padding: 32px;
+    height: auto; 
+    justify-content: flex-start;
+  }
 }
 
+
+/* === TYPOGRAPHY === */
+.hub-lbl {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.75rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em;
+  color: #ffffff; opacity: 0.8; 
+  margin-bottom: 6px; display: block; 
+}
+
+.hub-tit {
+  font-family: var(--font-sans); 
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  font-size: 1.1rem; 
+  margin: 0 0 6px 0;
+  color: #ffffff; 
+  line-height: 1.1;
+  
+  /* Ensure title doesn't break layout */
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hub-desc {
+  font-size: 0.85rem;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+  color: #ffffff; opacity: 0.85;
+  margin: 0;
+  
+  /* Mobile: Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* DESKTOP TYPE SCALING */
+@media (min-width: 900px) {
+  .hub-lbl, 
+  .hub-intro-eyebrow { 
+    font-size: 0.8rem; 
+    letter-spacing: 0.1em;
+  }
+  .hub-tit { font-size: 1.5rem; letter-spacing: 0.025em; margin-bottom: 12px; white-space: normal; } /* Allow wrapping on desktop */
+  
+  .hub-desc { 
+    font-size: 0.95rem; 
+    line-height: 1.6; 
+    /* Desktop: Allow more lines so it's never cut off */
+    -webkit-line-clamp: 4; 
+  }
+}
+
+/* CARD THEMES */
+.hub-t-research .hub-card-content { background-color: var(--card-research, #1a2b20); }
+.hub-t-photos .hub-card-content { background-color: var(--card-photos, #114b5f); }
+.hub-t-journal .hub-card-content { background-color: var(--card-journal, #36151e); }
+
 /* ============================
-   5. 404 PAGE ("DENATURED")
+   5. 404 PAGE
    ============================ */
-/* (Unchanged) */
 .hub-404 {
   min-height: 60vh; display: flex; flex-direction: column;
   justify-content: center; align-items: center; text-align: center;
@@ -223,18 +308,22 @@ a {
 }
 
 .denature-effect h1 {
-  font-size: 6rem; font-family: var(--font-mono); color: var(--brand-jungle); /* Using Var */
+  font-size: 6rem; font-family: var(--font-mono); color: var(--brand-jungle); 
   margin: 0; line-height: 1; position: relative;
   animation: heatshock 3s infinite alternate ease-in-out;
 }
 
 .denature-sub {
-  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.2em;
-  color: var(--text-muted); font-size: 1.2rem; margin-top: 1rem; opacity: 0.8;
+  font-family: var(--font-sans);
+  text-transform: uppercase; 
+  letter-spacing: 0.025em;
+  font-weight: 500;
+  color: var(--text-muted); 
+  font-size: 0.8rem; margin-top: 1rem; opacity: 0.8;
 }
 
 .error-text {
-  margin-top: 2rem; margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-body);
+  margin-top: 2rem; margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-main);
 }
 
 .back-link {
@@ -266,5 +355,5 @@ a {
 
 /* THE GOLD UTILITY */
 .gold { 
-  color: var(--color-gold-500) !important; 
+  color: var(--brand-gold) !important; 
 }

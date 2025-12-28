@@ -8,9 +8,11 @@ const BRAND_LINK = "/";
     
     <a href={BRAND_LINK} class="site-title">
       <img src="/logo.png" alt="Heat Shock Pineapple" class="header-logo" />
-      <span class="brand-text">
-        <span class="brand-main">Heat Shock</span><span class="gold"> Pineapple</span>
-      </span>
+      
+      <div class="brand-block">
+        <span class="word-top">HEATSHOCK</span>
+        <span class="word-btm gold">PINEAPPLE</span>
+      </div>
     </a>
 
     <div class="header-controls">
@@ -26,8 +28,6 @@ const BRAND_LINK = "/";
 <script>
   function setupHeader() {
     const themeToggles = document.querySelectorAll('.theme-toggle');
-
-    // HELPER: Strips old listeners cleanly (Directly from Photos Header [cite: 214])
     const replaceWithClone = (el) => {
       if (!el?.parentNode) return el;
       const clone = el.cloneNode(true);
@@ -35,7 +35,6 @@ const BRAND_LINK = "/";
       return clone;
     };
 
-    // THEME TOGGLE Logic matching Photos Header [cite: 223]
     themeToggles.forEach((btn) => {
       const newBtn = replaceWithClone(btn);
       newBtn.addEventListener('click', (e) => {
@@ -49,75 +48,95 @@ const BRAND_LINK = "/";
     });
   }
 
-  // Run on load & transitions matching Photos Header [cite: 224, 225]
   setupHeader();
   document.addEventListener('astro:after-swap', setupHeader);
   document.addEventListener('astro:page-load', setupHeader);
 </script>
 
 <style>
-  /* === LAYOUT ARCHITECTURE (Matches Photos Header [cite: 226-230]) === */
+  /* === LAYOUT ARCHITECTURE === */
   .site-header { 
-    position: sticky; 
+    position: sticky;
     top: 0; 
     z-index: 1000; 
-    padding: 1.2rem 0;
+    padding: 1.2rem 0; 
   }
   
   .site-header::before {
     content: ""; 
-    position: absolute; 
+    position: absolute;
     inset: 0; 
     z-index: -1;
-    background: #243b30; /* Jungle Green [cite: 227] */
+    background: #243b30; 
     opacity: 0.95;
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
 
   .header-inner { 
     width: 100%; 
-    max-width: 1600px; /* Hub Specific Width */
+    max-width: 1600px;
     margin: 0 auto; 
-    padding: 0 2rem; 
+    padding: 0 1.5rem; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
   }
   
-  /* BRANDING (Matches Photos Header [cite: 230-234]) */
+  /* BRANDING */
   .site-title { 
-    display: flex; 
-    align-items: center; 
-    gap: 0.75rem; 
+    display: flex;
+    align-items: center; /* Center logo vertically with the text block */
+    gap: 0.4rem; 
     text-decoration: none; 
     z-index: 1002; 
   }
   
-  .brand-text { 
-    font-family: var(--font-serif); 
-    font-weight: 600; 
-    font-size: 1.3rem; 
-    color: var(--text-inverse, #ffffff);
-    word-spacing: -0.15em;
-    letter-spacing: 0.01em; 
+  /* NEW: The Stack Container */
+  .brand-block {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    justify-content: center;
+    line-height: 1; /* Very tight spacing between lines */
+    transform: translateY(1px);
+  }
+
+  /* SHARED TEXT STYLES */
+  .word-top, .word-btm {
+    font-family: var(--font-sans);
+    font-weight: 900; /* Extra Bold */
+    font-size: 0.85rem; /* Smaller size to fit stack */
+    color: #ffffff; 
+    display: block;
+    
+    /* Trick to make font rendering sharper for small bold text */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .word-top {
+    letter-spacing: 0.3em; /* Standard wide spacing */
+  }
+
+  .word-btm {
+    /* WIDER spacing to compensate for narrow letters (I, L) in PINEAPPLE */
+    letter-spacing: 0.4065em; 
   }
   
   .gold { 
-    font-style: normal;
-    font-size: 1.02em; 
+    color: var(--brand-secondary, #ffd700);
   }
 
   .header-logo { 
     height: 32px; 
     width: auto; 
-    border-radius: 4px; 
+    border-radius: 4px;
+    display: block; 
   }
 
-  /* CONTROLS (Matches Photos Header [cite: 234-237]) */
+  /* CONTROLS */
   .header-controls { 
     display: flex; 
-    align-items: center; 
+    align-items: center;
   }
 
   .icon-btn { 
@@ -126,21 +145,18 @@ const BRAND_LINK = "/";
     cursor: pointer; 
     padding: 5px; 
     display: flex; 
-    align-items: center; 
+    align-items: center;
     transition: color 0.2s;
     color: rgba(255,255,255,0.7);
   }
 
   .icon-btn:hover { 
-    color: var(--text-inverse, #ffffff); 
+    color: #ffffff;
   }
 
-  /* THEME ICONS (Direct Copy of Photos Logic [cite: 240-242]) */
-  /* Default (Dark Mode) -> Show Moon */
   .sun-icon { display: none; }
   .moon-icon { display: block; }
 
-  /* Light Mode Override -> Show Sun */
   :global([data-theme="light"]) .sun-icon { display: block; }
   :global([data-theme="light"]) .moon-icon { display: none; }
 </style>
