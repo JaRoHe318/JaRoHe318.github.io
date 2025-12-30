@@ -67,7 +67,7 @@ const BRAND_LINK = "/";
     position: absolute;
     inset: 0; 
     z-index: -1;
-    background: #243b30; 
+    background: var(--color-jungle-800, #243b30); 
     opacity: 0.95;
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -106,7 +106,7 @@ const BRAND_LINK = "/";
     font-family: var(--font-sans);
     font-weight: 900; /* Extra Bold */
     font-size: 0.85rem; /* Smaller size to fit stack */
-    color: #ffffff; 
+    color: var(--text-inverse, #ffffff); 
     display: block;
     
     /* Trick to make font rendering sharper for small bold text */
@@ -151,7 +151,7 @@ const BRAND_LINK = "/";
   }
 
   .icon-btn:hover { 
-    color: #ffffff;
+    color: var(--text-inverse, #ffffff);
   }
 
   .sun-icon { display: none; }
