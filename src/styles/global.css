@@ -52,6 +52,16 @@ a {
 /* ============================
    1. HUB BACKGROUND GLOW
    ============================ */
+/* Contain transformed decoration without clipping cards or keyboard outlines. */
+.hub-atmosphere {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overflow: clip;
+  pointer-events: none;
+}
+.hub-glow { width: 100%; height: 100%; }
+
 @media (prefers-reduced-motion: no-preference) {
   .hub-glow { animation: hub-drift 20s infinite alternate ease-in-out; }
 }

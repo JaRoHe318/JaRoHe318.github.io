@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import { WRITING_URL } from '@heatshockpineapple/astro-ui/config';
 
 // Astro assets
 import { Image } from 'astro:assets';
@@ -13,7 +12,7 @@ import protocolsImg from '../assets/image3.jpg';
 
 const title = 'J. R. Hernandez · Heat Shock Pineapple';
 const description =
-  'J. R. Hernandez — biochemistry, Computation, and Photography. Portfolio, photos, and Heat Shock Protocols.';
+  'J. R. Hernandez — biochemistry, Computation, and Photography. Portfolio, photography, and writing on Substack.';
 
 // Responsive image sizing for card images
 const cardWidths = [360, 480, 640, 800];
@@ -21,9 +20,8 @@ const cardSizes = '(min-width: 700px) 480px, 100vw';
 ---
 
 <BaseLayout {title} {description}>
-  <Header />
 
-  <div class="hub-glow"></div>
+  <div class="hub-atmosphere" aria-hidden="true"><div class="hub-glow"></div></div>
 
   <div class="hub-wrapper">
     <section class="hub-intro">
@@ -93,16 +91,16 @@ const cardSizes = '(min-width: 700px) 480px, 100vw';
       </a>
 
       <a
-        href="https://blog.heatshockpineapple.com"
+        href={WRITING_URL}
         class="hub-card hub-t-journal"
-        aria-label="Open Heat Shock Protocols"
+        aria-label="Read writing on Substack"
       >
         <div class="hub-card-content">
           <div>
-            <span class="hub-lbl">Writing</span>
-            <h2 class="hub-tit">Blog</h2>
+            <span class="hub-lbl">On Substack ↗</span>
+            <h2 class="hub-tit">Writing</h2>
             <p class="hub-desc">
-              Notes on experiments, code, and tools, written while working through them.
+              Notes on science, code, and photography. Follow along on Substack.
             </p>
           </div>
         </div>
@@ -110,7 +108,7 @@ const cardSizes = '(min-width: 700px) 480px, 100vw';
         <div class="hub-card-img-box">
           <Image
             src={protocolsImg}
-            alt="Heat Shock Protocols"
+            alt="Writing on Substack"
             class="hub-img-fill"
             widths={cardWidths}
             sizes={cardSizes}
@@ -120,5 +118,4 @@ const cardSizes = '(min-width: 700px) 480px, 100vw';
     </div>
   </div>
 
-  <Footer />
 </BaseLayout>

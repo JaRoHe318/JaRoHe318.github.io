@@ -143,3 +143,11 @@ To use them:
 
 - **Code**: Licensed under the [MIT License](LICENSE). Feel free to use the structure and logic for your own projects.
 - **Content**: All images, photography, and written content are **Copyright © Jason Hernandez**. They may not be used or reproduced without permission.
+
+## Shared site framework
+
+The header, footer, brand asset, local navigation, and theme behavior come from `@heatshockpineapple/astro-ui`. The package source lives in `pineapple-design-tokens/packages/astro-ui`; site wrappers contain only configuration and optional local decoration. Content styles and interactive features remain in this repository.
+
+Use Node.js 22.23.5 (`.nvmrc`), then `npm ci` and `npm run build`. The package is installed from the versioned artifact checked into `vendor/`, so no sibling checkout or registry publication is needed to build this site. When updating the UI, copy the new release artifact into `vendor/`, install that file, and commit it together with `package.json` and `package-lock.json`. Test all three consumers before release.
+
+The header contains only this site's local navigation. The root-domain logo returns to the hub, whose cards link to Portfolio, Photography, and Writing on Substack. The Writing URL is configured once in the shared package and currently points to the verified Substack profile. The Astro blog remains preserved separately and is no longer linked from these sites.

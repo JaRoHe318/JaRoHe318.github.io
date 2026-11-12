@@ -1,5 +1,8 @@
 ---
+import ThemeInit from '@heatshockpineapple/astro-ui/ThemeInit.astro';
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
@@ -69,16 +72,11 @@ const socialImageURL = image.startsWith('http') ? image : new URL(image, baseURL
 
     {tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
-    <script is:inline>
-      const theme = localStorage.getItem('theme');
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
-    </script>
+    <ThemeInit defaultTheme="system" />
   </head>
   <body>
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>
